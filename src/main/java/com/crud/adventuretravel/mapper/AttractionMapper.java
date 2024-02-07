@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class AttractionMapper {
+
     public AttractionDto mapToAttractionDto(Attraction attraction) {
 
         return new AttractionDto(

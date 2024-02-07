@@ -23,7 +23,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.crud.adventuretravel.domain.PaymentStatus.CONFIRMED;
 import static org.mockito.Mockito.*;
 
 @SpringJUnitWebConfig
@@ -129,7 +128,7 @@ class ReservationControllerTest {
                 customer2,
                 attractionSet2,
                 LocalDate.of(2024, 1, 11),
-                CONFIRMED,
+                PaymentStatus.CONFIRMED,
                 ReservationStatus.CONFIRMED);
 
         TourDto tourDto2 = new TourDto();
@@ -147,7 +146,7 @@ class ReservationControllerTest {
                 customerDto2.getId(),
                 attractionLongSet2,
                 LocalDate.of(2024, 1, 11),
-                CONFIRMED,
+                PaymentStatus.CONFIRMED,
                 ReservationStatus.CONFIRMED);
 
         List<Reservation> reservationList = new ArrayList<>();

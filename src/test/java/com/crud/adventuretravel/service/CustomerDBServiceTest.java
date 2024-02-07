@@ -4,19 +4,19 @@ import com.crud.adventuretravel.domain.Customer;
 import com.crud.adventuretravel.exception.CustomerAlreadyExistsException;
 import com.crud.adventuretravel.exception.CustomerNotFoundException;
 import com.crud.adventuretravel.repository.CustomerRepository;
-
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
+@Transactional
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class CustomerDBServiceTest {
 
     @Autowired

@@ -2,17 +2,17 @@ package com.crud.adventuretravel.mapper;
 
 import com.crud.adventuretravel.domain.Attraction;
 import com.crud.adventuretravel.domain.AttractionDto;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.annotation.DirtiesContext;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+@Transactional
 @SpringBootTest
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 class AttractionMapperTest {
 
     @Autowired
