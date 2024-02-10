@@ -25,23 +25,23 @@ public class TourDBService {
         return tourRepository.findById(tourId).orElseThrow(TourNotFoundException::new);
     }
 
-    public void createTour(Tour tour) throws TourNotFoundException {
+    public void createTour(Tour tour) throws TourAlreadyExistsException {
 
         boolean isExisting = tourRepository.existsByName(tour.getName());
         if (!isExisting) {
             tourRepository.save(tour);
         } else {
-            throw new TourNotFoundException();
+            throw new TourAlreadyExistsException();
         }
     }
 
-    public void updateTour(Tour tour) throws TourAlreadyExistsException {
+    public void updateTour(Tour tour) throws TourNotFoundException {
 
         boolean isExisting = tourRepository.existsByName(tour.getName());
         if (isExisting) {
             tourRepository.save(tour);
         } else {
-            throw new TourAlreadyExistsException();
+            throw new TourNotFoundException();
         }
     }
 

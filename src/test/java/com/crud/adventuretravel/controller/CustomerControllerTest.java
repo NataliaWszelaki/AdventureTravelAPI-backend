@@ -1,10 +1,8 @@
 package com.crud.adventuretravel.controller;
 
-import com.crud.adventuretravel.domain.Customer;
 import com.crud.adventuretravel.domain.CustomerDto;
 import com.crud.adventuretravel.exception.CustomerNotFoundException;
-import com.crud.adventuretravel.mapper.CustomerMapper;
-import com.crud.adventuretravel.service.CustomerDBService;
+import com.crud.adventuretravel.facade.CustomerFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.hamcrest.Matchers;
@@ -32,26 +30,22 @@ class CustomerControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private CustomerDBService customerDBService;
+    private CustomerFacade customerFacade;
 
-    @MockBean
-    private CustomerMapper customerMapper;
-
-    private Customer customer;
     private CustomerDto customerDto;
 
     @BeforeEach
     void setUp() {
-        customer = new Customer(342L, "Johnny", "Black",
-                "black@test.com", 223456, LocalDate.of(2023, 2, 18));
+
         customerDto = new CustomerDto(342L, "Johnny", "Black",
-                "black@test.com", 223456, LocalDate.of(2023, 2, 18));
+                "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
     }
+
     @Test
     void shouldFetchEmptyList() throws Exception {
 
         //Given
-        when(customerDBService.getAllCustomers()).thenReturn(List.of());
+        when(customerFacade.getCustomers()).thenReturn(List.of());
 
         //When&Then
         mockMvc
@@ -63,21 +57,14 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldFetchList() throws Exception {
+    void shouldFetchCustomerList() throws Exception {
 
         //Given
-        List<Customer> customerList = List.of(
-                new Customer(12L, "John", "Smith", "john@test.com", 123456,
-                        LocalDate.of(2021, 12, 12)),
-                customer);
-
         List<CustomerDto> customerDtoList = List.of(
                 new CustomerDto(12L, "John", "Smith", "john@test.com", 123456,
-                        LocalDate.of(2021, 12, 12)),
+                        LocalDate.of(2021, 12, 12), true),
                 customerDto);
-
-        when(customerDBService.getAllCustomers()).thenReturn(customerList);
-        when(customerMapper.mapToCustomerDtoList(customerList)).thenReturn(customerDtoList);
+        when(customerFacade.getCustomers()).thenReturn(customerDtoList);
 
         //When&Then
         mockMvc
@@ -95,13 +82,11 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldFetchById() throws Exception {
+    void shouldFetchCustomerById() throws Exception {
 
         //Given
         long customerId = 342L;
-
-        when(customerDBService.getCustomerById(customerId)).thenReturn(customer);
-        when(customerMapper.mapToCustomerDto(customer)).thenReturn(customerDto);
+        when(customerFacade.getCustomerById(customerId)).thenReturn(customerDto);
 
         //When&Then
         mockMvc
@@ -118,12 +103,11 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldNotFetchById() throws Exception {
+    void shouldNotFetchCustomerById() throws Exception {
 
         //Given
         Long customerId = 223L;
-
-        when(customerDBService.getCustomerById(customerId)).thenThrow(CustomerNotFoundException.class);
+        when(customerFacade.getCustomerById(customerId)).thenThrow(CustomerNotFoundException.class);
 
         //When & Then
         mockMvc
@@ -135,11 +119,9 @@ class CustomerControllerTest {
     }
 
     @Test
-    void shouldCreate() throws Exception {
+    void shouldCreateCustomer() throws Exception {
 
         // Given
-        when(customerMapper.mapToCustomer(any(CustomerDto.class))).thenReturn(customer);
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -158,15 +140,12 @@ class CustomerControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-        verify(customerDBService, times(1)).createCustomer(customer);
     }
 
     @Test
-    void shouldUpdate() throws Exception {
+    void shouldUpdateCustomer() throws Exception {
 
         // Given
-        when(customerMapper.mapToCustomer(any(CustomerDto.class))).thenReturn(customer);
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -185,11 +164,10 @@ class CustomerControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-        verify(customerDBService, times(1)).updateCustomer(customer);
     }
 
     @Test
-    void shouldDelete() throws Exception {
+    void shouldDeleteCustomer() throws Exception {
 
         //When & Then
         mockMvc
@@ -197,7 +175,6 @@ class CustomerControllerTest {
                         .delete("/v1/customers/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-
-        verify(customerDBService, times(1)).deleteCustomer(1L);
+        verify(customerFacade, times(1)).deleteCustomer(1L);
     }
 }

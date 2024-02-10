@@ -36,7 +36,7 @@ class CustomerMapperTest {
 
         //Given
         Customer customer = new Customer(342L, "Johnny", "Black",
-                "black@test.com", 223456, LocalDate.of(2023, 2, 18));
+                "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
 
         //When
         CustomerDto mappedCustomerDto = customerMapper.mapToCustomerDto(customer);
@@ -52,7 +52,7 @@ class CustomerMapperTest {
 
         //Given
         CustomerDto customerDto = new CustomerDto(312L, "John", "White",
-                "white@test.com", 11223456, LocalDate.of(2013, 12, 18));
+                "white@test.com", 11223456, LocalDate.of(2013, 12, 18), true);
 
         //When
         Customer mappedCustomer = customerMapper.mapToCustomer(customerDto);
@@ -68,9 +68,9 @@ class CustomerMapperTest {
 
         //Given
         List<Customer> customerList = List.of(
-                new Customer(12L, "John", "Smith", "john@test.com", 123456, LocalDate.of(2021, 12, 12)),
+                new Customer(12L, "John", "Smith", "john@test.com", 123456, LocalDate.of(2021, 12, 12), true),
                 new Customer(132L, "Johnny", "Black",
-                        "black@test.com", 223456, LocalDate.of(2023, 2, 18)));
+                        "black@test.com", 223456, LocalDate.of(2023, 2, 18), true));
 
         //When
         List<CustomerDto> customerDtoList = customerMapper.mapToCustomerDtoList(customerList);

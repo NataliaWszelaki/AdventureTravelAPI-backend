@@ -30,9 +30,9 @@ class CustomerDBServiceTest {
 
         //Given
         customerRepository.save(new Customer("Anna", "White", "awhite@test.test",
-                123456789, LocalDate.of(2021, 1, 25)));
+                123456789, LocalDate.of(2021, 1, 25), true));
         customerRepository.save(new Customer("Anna", "Black", "ablack@test.test",
-                123456789, LocalDate.of(2021, 11, 15)));
+                123456789, LocalDate.of(2021, 11, 15), true));
 
         //When
         List<Customer> customerList = customerDBService.getAllCustomers();
@@ -46,7 +46,7 @@ class CustomerDBServiceTest {
 
         //Given
         Customer customer = new Customer(123L, "John", "Smith", "john.smith@test.test",
-                123456789, LocalDate.of(2020, 12, 12));
+                123456789, LocalDate.of(2020, 12, 12), true);
         customerRepository.save(customer);
 
         //When
@@ -61,7 +61,7 @@ class CustomerDBServiceTest {
 
         //Given
         Customer customer = new Customer("Michael", "Bear", "mb@test.test",
-                123456789, LocalDate.of(2024, 1, 28));
+                123456789, LocalDate.of(2024, 1, 28), true);
 
         //When
         customerDBService.createCustomer(customer);
@@ -77,12 +77,12 @@ class CustomerDBServiceTest {
 
         //Given
         Customer customer = new Customer("Michael", "Bear", "mb@test.test",
-                123456789, LocalDate.of(2024, 1, 28));
+                123456789, LocalDate.of(2024, 1, 28), true);
         customerRepository.save(customer);
         Customer savedCustomer = customerRepository.findByEmail("mb@test.test");
         long id = savedCustomer.getId();
         Customer customer1 = new Customer("Michael", "Bear-Braun", "mb@test.test",
-                123456789, LocalDate.of(2024, 1, 28));
+                123456789, LocalDate.of(2024, 1, 28), true);
         customer1.setId(id);
 
         //When
@@ -98,7 +98,7 @@ class CustomerDBServiceTest {
 
         //Given
         Customer customer = new Customer("Michael", "Bear", "mb@test.test",
-                123456789, LocalDate.of(2024, 1, 28));
+                123456789, LocalDate.of(2024, 1, 28), true);
         customerRepository.save(customer);
         Customer savedCustomer = customerRepository.findByEmail("mb@test.test");
         long id = savedCustomer.getId();

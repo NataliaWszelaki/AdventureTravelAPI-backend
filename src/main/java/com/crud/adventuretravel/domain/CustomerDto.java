@@ -19,4 +19,5 @@ public class CustomerDto {
     private String email;
     private int phoneNumber;
     private LocalDate accountCreationDate;
+    private boolean subscriber;
 }

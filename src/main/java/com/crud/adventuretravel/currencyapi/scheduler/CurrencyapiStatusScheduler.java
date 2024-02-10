@@ -1,4 +1,4 @@
-package com.crud.adventuretravel.scheduler;
+package com.crud.adventuretravel.currencyapi.scheduler;
 
 import com.crud.adventuretravel.config.AdminConfig;
 import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatus;

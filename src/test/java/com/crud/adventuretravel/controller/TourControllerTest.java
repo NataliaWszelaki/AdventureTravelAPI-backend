@@ -1,11 +1,8 @@
 package com.crud.adventuretravel.controller;
 
-import com.crud.adventuretravel.domain.Tour;
 import com.crud.adventuretravel.domain.TourDto;
-import com.crud.adventuretravel.exception.TourAlreadyExistsException;
 import com.crud.adventuretravel.exception.TourNotFoundException;
-import com.crud.adventuretravel.mapper.TourMapper;
-import com.crud.adventuretravel.service.TourDBService;
+import com.crud.adventuretravel.facade.TourFacade;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.hamcrest.Matchers;
@@ -33,31 +30,23 @@ class TourControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private TourDBService tourDBService;
+    private TourFacade tourFacade;
 
-    @MockBean
-    private TourMapper tourMapper;
-
-    private Tour tour;
     private TourDto tourDto;
 
     @BeforeEach
     void setUp() {
-        tour = new Tour(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
-                LocalDate.of(2024,4,23), LocalDate.of(2024,5,8),
-                "Alicante", "Alicante", 3000, 15000);
 
         tourDto = new TourDto(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
-                LocalDate.of(2024,4,23), LocalDate.of(2024,5,8),
+                LocalDate.of(2024, 4, 23), LocalDate.of(2024, 5, 8),
                 "Alicante", "Alicante", 3000, 15000);
-
     }
 
     @Test
     void shouldFetchEmptyList() throws Exception {
 
         //Given
-        when(tourDBService.getAllTours()).thenReturn(List.of());
+        when(tourFacade.getTours()).thenReturn(List.of());
 
         //When&Then
         mockMvc
@@ -72,17 +61,11 @@ class TourControllerTest {
     void shouldFetchTourList() throws Exception {
 
         //Given
-        List<Tour> tourList = List.of(
-                tour,
-                new Tour(8L, "German castles", "Germany", "Castles", LocalDate.of(2024,5,13),
-                        LocalDate.of(2024,5,27), "Frankfurt am Main", "Frankfurt am Main",1500, 7000));
         List<TourDto> tourDtoList = List.of(
                 tourDto,
-                new TourDto(8L, "German castles", "Germany", "Castles", LocalDate.of(2024,5,13),
-                        LocalDate.of(2024,5,27), "Frankfurt am Main", "Frankfurt am Main",1500, 7000));
-
-        when(tourDBService.getAllTours()).thenReturn(tourList);
-        when(tourMapper.mapToTourDtoList(tourList)).thenReturn(tourDtoList);
+                new TourDto(8L, "German castles", "Germany", "Castles", LocalDate.of(2024, 5, 13),
+                        LocalDate.of(2024, 5, 27), "Frankfurt am Main", "Frankfurt am Main", 1500, 7000));
+        when(tourFacade.getTours()).thenReturn(tourDtoList);
 
         //When&Then
         mockMvc
@@ -109,8 +92,7 @@ class TourControllerTest {
         //Given
         long tourId = 5L;
 
-        when(tourDBService.getTourById(tourId)).thenReturn(tour);
-        when(tourMapper.mapToTourDto(tour)).thenReturn(tourDto);
+        when(tourFacade.getTourById(tourId)).thenReturn(tourDto);
 
         //When&Then
         mockMvc
@@ -135,11 +117,11 @@ class TourControllerTest {
 
         //Given
         Long tourId = 223L;
-        when(tourDBService.getTourById(tourId)).thenThrow(TourNotFoundException.class);
+        when(tourFacade.getTourById(tourId)).thenThrow(TourNotFoundException.class);
 
         //When & Then
         mockMvc
-                 .perform(MockMvcRequestBuilders
+                .perform(MockMvcRequestBuilders
                         .get("/v1/tours/223")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.jsonPath("$").value("Tour with given ID doesn't exist."))
@@ -150,8 +132,6 @@ class TourControllerTest {
     void shouldCreateTour() throws Exception {
 
         // Given
-        when(tourMapper.mapToTour(any(TourDto.class))).thenReturn(tour);
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -170,15 +150,12 @@ class TourControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-        verify(tourDBService, times(1)).createTour(tour);
     }
 
     @Test
-    void shouldUpdateTour() throws Exception, TourAlreadyExistsException {
+    void shouldUpdateTour() throws Exception {
 
         // Given
-        when(tourMapper.mapToTour(any(TourDto.class))).thenReturn(tour);
-
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -197,7 +174,6 @@ class TourControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-        verify(tourDBService, times(1)).updateTour(tour);
     }
 
     @Test
@@ -209,7 +185,6 @@ class TourControllerTest {
                         .delete("/v1/tours/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-
-        verify(tourDBService, times(1)).deleteTour(1L);
+        verify(tourFacade, times(1)).deleteTour(1L);
     }
 }

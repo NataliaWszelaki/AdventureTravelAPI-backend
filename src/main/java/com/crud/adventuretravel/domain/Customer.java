@@ -44,6 +44,9 @@ public class Customer {
     @Column(name = "ACCOUNT_CREATION_DATE")
     private LocalDate accountCreationDate;
 
+    @Column(name = "NEWSLETTER")
+    private boolean subscriber;
+
     @OneToMany(
             targetEntity = Reservation.class,
             mappedBy = "customer",
@@ -52,20 +55,22 @@ public class Customer {
     )
     private List<Reservation> reservationCustomerList = new ArrayList<>();
 
-    public Customer(String firstName, String lastName, String email, int phoneNumber, LocalDate accountCreationDate) {
+    public Customer(String firstName, String lastName, String email, int phoneNumber, LocalDate accountCreationDate, boolean subscriber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.accountCreationDate = accountCreationDate;
+        this.subscriber = subscriber;
     }
 
-    public Customer(long id, String firstName, String lastName, String email, int phoneNumber, LocalDate accountCreationDate) {
+    public Customer(long id, String firstName, String lastName, String email, int phoneNumber, LocalDate accountCreationDate, boolean subscriber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.accountCreationDate = accountCreationDate;
+        this.subscriber = subscriber;
     }
 }

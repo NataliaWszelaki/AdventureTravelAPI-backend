@@ -6,11 +6,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
 @Getter
 @Setter
 @AllArgsConstructor

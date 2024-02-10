@@ -1,11 +1,9 @@
 package com.crud.adventuretravel.controller;
 
-import com.crud.adventuretravel.domain.Customer;
 import com.crud.adventuretravel.domain.CustomerDto;
 import com.crud.adventuretravel.exception.CustomerAlreadyExistsException;
 import com.crud.adventuretravel.exception.CustomerNotFoundException;
-import com.crud.adventuretravel.mapper.CustomerMapper;
-import com.crud.adventuretravel.service.CustomerDBService;
+import com.crud.adventuretravel.facade.CustomerFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,43 +17,38 @@ import java.util.List;
 @CrossOrigin("*")
 public class CustomerController {
 
-    private final CustomerDBService customerDBService;
-    private final CustomerMapper customerMapper;
+    private final CustomerFacade customerFacade;
 
     @GetMapping
-    public List<CustomerDto> getCustomers() {
+    public ResponseEntity<List<CustomerDto>> getCustomers() {
 
-        List<Customer> customerList = customerDBService.getAllCustomers();
-        return customerMapper.mapToCustomerDtoList(customerList);
+        return ResponseEntity.ok(customerFacade.getCustomers());
     }
 
     @GetMapping(value = "{customerId}")
     public ResponseEntity<CustomerDto> getCustomerById(@PathVariable Long customerId) throws CustomerNotFoundException {
 
-        Customer customer = customerDBService.getCustomerById(customerId);
-        return ResponseEntity.ok(customerMapper.mapToCustomerDto(customer));
+        return ResponseEntity.ok(customerFacade.getCustomerById(customerId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createCustomer(@RequestBody CustomerDto customerDto) throws CustomerAlreadyExistsException {
 
-        Customer customer = customerMapper.mapToCustomer(customerDto);
-        customerDBService.createCustomer(customer);
+        customerFacade.createCustomer(customerDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDto customerDto) throws CustomerNotFoundException {
 
-        Customer customer = customerMapper.mapToCustomer(customerDto);
-        customerDBService.updateCustomer(customer);
+        customerFacade.updateCustomer(customerDto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{customerId}")
     public ResponseEntity<Void> deleteCustomer(@PathVariable Long customerId) {
 
-        customerDBService.deleteCustomer(customerId);
+        customerFacade.deleteCustomer(customerId);
         return ResponseEntity.ok().build();
     }
 }

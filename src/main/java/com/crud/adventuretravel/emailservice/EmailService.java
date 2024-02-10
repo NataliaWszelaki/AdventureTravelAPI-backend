@@ -1,5 +1,6 @@
 package com.crud.adventuretravel.emailservice;
 
+import com.crud.adventuretravel.exception.EmailSendingException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.MailException;
@@ -24,14 +25,14 @@ public class EmailService {
          log.info("Email has been sent.");
       } catch (MailException e) {
          log.error("Failed to process email sending: " + e.getMessage(), e);
+         throw new EmailSendingException("Failed to send email", e);
       }
    }
 
    private SimpleMailMessage createMailMessage(final Mail mail) {
       SimpleMailMessage mailMessage = new SimpleMailMessage();
       mailMessage.setTo(mail.getMailTo());
-      Optional<String> toCc = Optional.ofNullable(mail.getToCc());
-      toCc.ifPresent(mailMessage::setCc);
+      Optional.ofNullable(mail.getToCcList().toString()).ifPresent(mailMessage::setCc);
       mailMessage.setSubject(mail.getSubject());
       mailMessage.setText(mail.getMessage());
       return mailMessage;

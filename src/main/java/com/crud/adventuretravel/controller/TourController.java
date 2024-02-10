@@ -1,11 +1,9 @@
 package com.crud.adventuretravel.controller;
 
-import com.crud.adventuretravel.domain.Tour;
 import com.crud.adventuretravel.domain.TourDto;
 import com.crud.adventuretravel.exception.TourAlreadyExistsException;
 import com.crud.adventuretravel.exception.TourNotFoundException;
-import com.crud.adventuretravel.mapper.TourMapper;
-import com.crud.adventuretravel.service.TourDBService;
+import com.crud.adventuretravel.facade.TourFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,43 +17,38 @@ import java.util.List;
 @CrossOrigin("*")
 public class TourController {
 
-    private final TourDBService tourDBService;
-    private final TourMapper tourMapper;
+    private final TourFacade tourFacade;
 
     @GetMapping
-    public List<TourDto> getTours() {
+    public ResponseEntity<List<TourDto>> getTours() {
 
-        List<Tour> tourList = tourDBService.getAllTours();
-        return tourMapper.mapToTourDtoList(tourList);
+        return ResponseEntity.ok(tourFacade.getTours());
     }
 
     @GetMapping(value = "{tourId}")
     public ResponseEntity<TourDto> getTourById(@PathVariable Long tourId) throws TourNotFoundException {
 
-        Tour tour = tourDBService.getTourById(tourId);
-        return ResponseEntity.ok(tourMapper.mapToTourDto(tour));
+        return ResponseEntity.ok(tourFacade.getTourById(tourId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createTour(@RequestBody TourDto tourDto) throws TourNotFoundException {
+    public ResponseEntity<Void> createTour(@RequestBody TourDto tourDto) throws TourAlreadyExistsException {
 
-        Tour tour = tourMapper.mapToTour(tourDto);
-        tourDBService.createTour(tour);
+        tourFacade.createTour(tourDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateTour(@RequestBody TourDto tourDto) throws TourAlreadyExistsException {
+    public ResponseEntity<Void> updateTour(@RequestBody TourDto tourDto) throws TourNotFoundException {
 
-        Tour tour = tourMapper.mapToTour(tourDto);
-        tourDBService.updateTour(tour);
+        tourFacade.updateTour(tourDto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{tourId}")
     public ResponseEntity<Void> deleteTour(@PathVariable Long tourId) {
 
-        tourDBService.deleteTour(tourId);
+        tourFacade.deleteTour(tourId);
         return ResponseEntity.ok().build();
     }
 }

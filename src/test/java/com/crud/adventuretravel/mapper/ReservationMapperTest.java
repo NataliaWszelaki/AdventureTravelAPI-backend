@@ -48,7 +48,7 @@ class ReservationMapperTest {
                 LocalDate.of(2024, 5, 17), "Rome", "Bari",
                 2000, 9000);
         customer = new Customer(342L, "Johnny", "Black",
-                "black@test.com", 223456, LocalDate.of(2023, 2, 18));
+                "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
         attraction = new Attraction(5L, "Making pasta", "Isola del Giglio",
                 "How to make pasta", 30, 150);
         attraction2 = new Attraction(8L, "Wine tasting", "Sienna",
@@ -143,7 +143,7 @@ class ReservationMapperTest {
                 LocalDate.of(2024, 5, 17), "Rome", "Bari",
                 2000, 9000);
         Customer customer2 = new Customer(342L, "Johnny", "Black",
-                "black@test.com", 223456, LocalDate.of(2023, 2, 18));
+                "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
         Attraction attraction3 = new Attraction(5L, "Making pasta", "Isola del Giglio",
                 "How to make pasta", 30, 150);
         Attraction attraction4 = new Attraction(8L, "Wine tasting", "Sienna",

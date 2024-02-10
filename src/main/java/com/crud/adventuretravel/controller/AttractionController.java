@@ -1,11 +1,9 @@
 package com.crud.adventuretravel.controller;
 
-import com.crud.adventuretravel.domain.Attraction;
 import com.crud.adventuretravel.domain.AttractionDto;
 import com.crud.adventuretravel.exception.AttractionAlreadyExistsException;
 import com.crud.adventuretravel.exception.AttractionNotFoundException;
-import com.crud.adventuretravel.mapper.AttractionMapper;
-import com.crud.adventuretravel.service.AttractionDBService;
+import com.crud.adventuretravel.facade.AttractionFacade;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -19,43 +17,38 @@ import java.util.List;
 @CrossOrigin("*")
 public class AttractionController {
 
-    private final AttractionDBService attractionDBService;
-    private final AttractionMapper attractionMapper;
+    private final AttractionFacade attractionFacade;
 
     @GetMapping
-    public List<AttractionDto> getAttractions() {
+    public ResponseEntity<List<AttractionDto>> getAttractions() {
 
-        List<Attraction> attractionList = attractionDBService.getAllAttractions();
-        return attractionMapper.mapToAttractionDtoList(attractionList);
+        return ResponseEntity.ok(attractionFacade.getAttractions());
     }
 
     @GetMapping(value = "{attractionId}")
     public ResponseEntity<AttractionDto> getAttractionById(@PathVariable Long attractionId) throws AttractionNotFoundException {
 
-        Attraction attraction = attractionDBService.getAttractionById(attractionId);
-        return ResponseEntity.ok(attractionMapper.mapToAttractionDto(attraction));
+        return ResponseEntity.ok(attractionFacade.getAttractionById(attractionId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createAttraction(@RequestBody AttractionDto attractionDto) throws AttractionAlreadyExistsException {
 
-        Attraction attraction = attractionMapper.mapToAttraction(attractionDto);
-        attractionDBService.createAttraction(attraction);
+        attractionFacade.createAttraction(attractionDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
     public ResponseEntity<Void> updateAttraction(@RequestBody AttractionDto attractionDto) throws AttractionNotFoundException {
 
-        Attraction attraction = attractionMapper.mapToAttraction(attractionDto);
-        attractionDBService.updateAttraction(attraction);
+        attractionFacade.updateAttraction(attractionDto);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping(value = "/{attractionId}")
     public ResponseEntity<Void> deleteAttraction(@PathVariable Long attractionId) {
 
-        attractionDBService.deleteAttraction(attractionId);
+        attractionFacade.deleteAttraction(attractionId);
         return ResponseEntity.ok().build();
     }
 }

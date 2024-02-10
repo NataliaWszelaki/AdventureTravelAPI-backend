@@ -18,7 +18,8 @@ public class CustomerMapper {
                 customer.getLastName(),
                 customer.getEmail(),
                 customer.getPhoneNumber(),
-                customer.getAccountCreationDate()
+                customer.getAccountCreationDate(),
+                customer.isSubscriber()
         );
     }
 
@@ -30,7 +31,8 @@ public class CustomerMapper {
                 customerDto.getLastName(),
                 customerDto.getEmail(),
                 customerDto.getPhoneNumber(),
-                customerDto.getAccountCreationDate()
+                customerDto.getAccountCreationDate(),
+                customerDto.isSubscriber()
         );
     }
 

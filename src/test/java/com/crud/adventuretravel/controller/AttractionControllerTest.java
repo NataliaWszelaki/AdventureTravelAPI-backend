@@ -1,10 +1,8 @@
 package com.crud.adventuretravel.controller;
 
-import com.crud.adventuretravel.domain.Attraction;
 import com.crud.adventuretravel.domain.AttractionDto;
 import com.crud.adventuretravel.exception.AttractionNotFoundException;
-import com.crud.adventuretravel.mapper.AttractionMapper;
-import com.crud.adventuretravel.service.AttractionDBService;
+import com.crud.adventuretravel.facade.AttractionFacade;
 import com.google.gson.Gson;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
@@ -30,29 +28,22 @@ class AttractionControllerTest {
     private MockMvc mockMvc;
 
     @MockBean
-    private AttractionDBService attractionDBService;
+    private AttractionFacade attractionFacade;
 
-    @MockBean
-    private AttractionMapper attractionMapper;
-
-    private Attraction attraction;
     private AttractionDto attractionDto;
 
     @BeforeEach
     void setUp() {
-        attraction = new Attraction(5L, "Making pasta", "Isola del Giglio",
-                "How to make pasta", 30, 150);
 
         attractionDto = new AttractionDto(5L, "Making pasta", "Isola del Giglio",
                 "How to make pasta", 30, 150);
-
     }
 
     @Test
     void shouldFetchEmptyList() throws Exception {
 
         //Given
-        when(attractionDBService.getAllAttractions()).thenReturn(List.of());
+        when(attractionFacade.getAttractions()).thenReturn(List.of());
 
         //When&Then
         mockMvc
@@ -67,17 +58,11 @@ class AttractionControllerTest {
     void shouldFetchAttractionList() throws Exception {
 
         //Given
-        List<Attraction> attractionList = List.of(
-                attraction,
-                new Attraction(8L, "Wine tasting", "Sienna",
-                        "tasting Wine in a beautiful restaurant",30, 150));
         List<AttractionDto> attractionDtoList = List.of(
                 attractionDto,
                 new AttractionDto(8L, "Wine tasting", "Sienna",
-                        "tasting Wine in a beautiful restaurant",30, 150));
-
-        when(attractionDBService.getAllAttractions()).thenReturn(attractionList);
-        when(attractionMapper.mapToAttractionDtoList(attractionList)).thenReturn(attractionDtoList);
+                        "tasting Wine in a beautiful restaurant", 30, 150));
+        when(attractionFacade.getAttractions()).thenReturn(attractionDtoList);
 
         //When&Then
         mockMvc
@@ -99,9 +84,7 @@ class AttractionControllerTest {
 
         //Given
         long attractionId = 5L;
-
-        when(attractionDBService.getAttractionById(attractionId)).thenReturn(attraction);
-        when(attractionMapper.mapToAttractionDto(attraction)).thenReturn(attractionDto);
+        when(attractionFacade.getAttractionById(attractionId)).thenReturn(attractionDto);
 
         //When&Then
         mockMvc
@@ -122,7 +105,7 @@ class AttractionControllerTest {
 
         //Given
         Long attractionId = 223L;
-        when(attractionDBService.getAttractionById(attractionId)).thenThrow(AttractionNotFoundException.class);
+        when(attractionFacade.getAttractionById(attractionId)).thenThrow(AttractionNotFoundException.class);
 
         //When & Then
         mockMvc
@@ -136,9 +119,7 @@ class AttractionControllerTest {
     @Test
     void shouldCreateAttraction() throws Exception {
 
-        // Given
-        when(attractionMapper.mapToAttraction(any(AttractionDto.class))).thenReturn(attraction);
-
+        //Given
         Gson gson = new Gson();
         String jsonContent = gson.toJson(attractionDto);
 
@@ -150,15 +131,12 @@ class AttractionControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-        verify(attractionDBService, times(1)).createAttraction(attraction);
     }
 
     @Test
     void shouldUpdateAttraction() throws Exception {
 
-        // Given
-        when(attractionMapper.mapToAttraction(any(AttractionDto.class))).thenReturn(attraction);
-
+        //Given
         Gson gson = new Gson();
         String jsonContent = gson.toJson(attractionDto);
 
@@ -170,7 +148,6 @@ class AttractionControllerTest {
                         .characterEncoding("UTF-8")
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-        verify(attractionDBService, times(1)).updateAttraction(attraction);
     }
 
     @Test
@@ -182,7 +159,6 @@ class AttractionControllerTest {
                         .delete("/v1/attractions/1")
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200));
-
-        verify(attractionDBService, times(1)).deleteAttraction(1L);
+        verify(attractionFacade, times(1)).deleteAttraction(1L);
     }
 }

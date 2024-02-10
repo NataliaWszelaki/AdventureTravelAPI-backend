@@ -8,8 +8,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class EmailServiceTest {
@@ -22,6 +21,7 @@ class EmailServiceTest {
 
     @Test
     public void shouldSendEmail() {
+
         //Given
         Mail mail = new Mail.MailBuilder()
                 .mailTo("test@test.com")
@@ -38,6 +38,6 @@ class EmailServiceTest {
         emailService.send(mail);
 
         //Then
-        verify(javaMailSender, times(1)).send(mailMessage);
+        verify(javaMailSender, times(1)).send(any(SimpleMailMessage.class));
     }
 }

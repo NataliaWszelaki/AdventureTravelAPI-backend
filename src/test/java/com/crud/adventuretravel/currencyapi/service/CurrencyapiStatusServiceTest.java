@@ -23,7 +23,7 @@ public class CurrencyapiStatusServiceTest {
     private CurrencyapiClient currencyapiClient;
 
     @Test
-    public void testFetchStatus() {
+    public void shouldFetchStatus() {
 
         //Given
         CurrencyapiStatusDto statusDto = new CurrencyapiStatusDto();
