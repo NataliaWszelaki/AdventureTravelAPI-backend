@@ -28,4 +28,19 @@ public class GlobalHttpErrorHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleTourNotFoundException (TourNotFoundException exception) {
         return new ResponseEntity<>("Tour with given ID doesn't exist.", HttpStatus.NOT_FOUND);
     }
+
+    @ExceptionHandler(AttractionAlreadyExistsException.class)
+    public ResponseEntity<Object> handleAttractionAlreadyExistsException (AttractionAlreadyExistsException exception) {
+        return new ResponseEntity<>("Attraction with given ID already exist.", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(CustomerAlreadyExistsException.class)
+    public ResponseEntity<Object> handleCustomerAlreadyExistsException (CustomerAlreadyExistsException exception) {
+        return new ResponseEntity<>("Customer with given ID already exist.", HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(TourAlreadyExistsException.class)
+    public ResponseEntity<Object> handleTourAlreadyExistsException (TourAlreadyExistsException exception) {
+        return new ResponseEntity<>("Tour with given ID already exist.", HttpStatus.NOT_FOUND);
+    }
 }

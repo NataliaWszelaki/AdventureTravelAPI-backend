@@ -27,7 +27,7 @@ public class AttractionDBService {
 
     public void createAttraction(Attraction attraction) throws AttractionAlreadyExistsException {
 
-        boolean isExisting = attractionRepository.existsByName(attraction.getName());
+        boolean isExisting = attractionRepository.existsByTitle(attraction.getTitle());
         if (!isExisting) {
             attractionRepository.save(attraction);
         } else {
@@ -37,7 +37,7 @@ public class AttractionDBService {
 
     public void updateAttraction(Attraction attraction) throws AttractionNotFoundException {
 
-        boolean isExisting = attractionRepository.existsByName(attraction.getName());
+        boolean isExisting = attractionRepository.existsByTitle(attraction.getTitle());
         if (isExisting) {
             attractionRepository.save(attraction);
         } else {

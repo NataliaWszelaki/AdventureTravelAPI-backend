@@ -1,17 +1,21 @@
-package com.crud.adventuretravel.currencyapi.domain.rateexchange;
+package com.crud.adventuretravel.currencyapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class RateExchangeApiResponseDto {
+public class CurrencyapiStatusResponse {
 
-    @JsonProperty("data")
-    private DataDto data;
+    @JsonProperty("account_id")
+    private long accountId;
+    @JsonProperty("quotas")
+    private Quotas quotas;
 }

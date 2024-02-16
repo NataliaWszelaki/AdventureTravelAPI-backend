@@ -43,11 +43,11 @@ class AttractionFacadeTest {
     @BeforeEach
     void setUp() {
 
-        attraction = new Attraction(5L, "Making pasta", "Isola del Giglio",
-                "How to make pasta", 30, 150);
+        attraction = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
+                "Cooking", "How to make pasta", 30, 150);
 
-        attractionDto = new AttractionDto(5L, "Making pasta", "Isola del Giglio",
-                "How to make pasta", 30, 150);
+        attractionDto = new AttractionDto(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
+                "Cooking", "How to make pasta", 30, 150);
     }
 
     @Test
@@ -56,12 +56,12 @@ class AttractionFacadeTest {
         //Given
         List<Attraction> attractionList = List.of(
                 attraction,
-                new Attraction(8L, "Wine tasting", "Sienna",
-                        "tasting Wine in a beautiful restaurant", 30, 150));
+                new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
         List<AttractionDto> attractionDtoList = List.of(
                 attractionDto,
-                new AttractionDto(8L, "Wine tasting", "Sienna",
-                        "tasting Wine in a beautiful restaurant", 30, 150));
+                new AttractionDto(8L, 234, "Sienna", "Wine tasting", "Vineyard",
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
         when(attractionDBService.getAllAttractions()).thenReturn(attractionList);
         when(attractionMapper.mapToAttractionDtoList(attractionList)).thenReturn(attractionDtoList);
 
@@ -84,7 +84,7 @@ class AttractionFacadeTest {
         AttractionDto returnedAttractionDto = attractionFacade.getAttractionById(attractionId);
 
         //Then
-        assertEquals("Making pasta", returnedAttractionDto.getName());
+        assertEquals("Isola del Giglio", returnedAttractionDto.getName());
     }
 
     @Test

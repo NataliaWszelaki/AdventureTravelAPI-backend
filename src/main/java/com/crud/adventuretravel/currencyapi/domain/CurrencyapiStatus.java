@@ -1,4 +1,4 @@
-package com.crud.adventuretravel.currencyapi.domain.status;
+package com.crud.adventuretravel.currencyapi.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -20,8 +20,7 @@ public class RateExchangeScheduler {
     private final AdminConfig adminConfig;
 
     @Scheduled(cron = "0 0 1 * * *")
-//    @Scheduled(fixedRate = 10000000)
-    public void saveCurrencyStatus() {
+    public void fetchRateExchange() {
         log.info("Initiating data retrieval from Currencyapi...");
         try {
             rateExchangeService.fetchLatestExchangeRateEuroToPln();

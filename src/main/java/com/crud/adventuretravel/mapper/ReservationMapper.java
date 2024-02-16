@@ -66,7 +66,14 @@ public class ReservationMapper {
     public Set<Attraction> convertToAttractionSet(Set<Long> attractionLongSet) {
 
         return attractionLongSet.stream()
-                .map(a -> attractionRepository.findById(a).get())
+                .map(a -> {
+                    Attraction attraction = null;
+                    boolean isPresent = attractionRepository.findById(a).isPresent();
+                    if (isPresent) {
+                        attraction = attractionRepository.findById(a).get();
+                    }
+                    return attraction;
+                })
                 .collect(Collectors.toSet());
     }
 }

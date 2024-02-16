@@ -35,8 +35,8 @@ class AttractionControllerTest {
     @BeforeEach
     void setUp() {
 
-        attractionDto = new AttractionDto(5L, "Making pasta", "Isola del Giglio",
-                "How to make pasta", 30, 150);
+        attractionDto = new AttractionDto(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
+                "Cooking", "How to make pasta", 30, 150);
     }
 
     @Test
@@ -60,8 +60,8 @@ class AttractionControllerTest {
         //Given
         List<AttractionDto> attractionDtoList = List.of(
                 attractionDto,
-                new AttractionDto(8L, "Wine tasting", "Sienna",
-                        "tasting Wine in a beautiful restaurant", 30, 150));
+                new AttractionDto(8L, 234, "Sienna", "Wine tasting", "Vineyard",
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
         when(attractionFacade.getAttractions()).thenReturn(attractionDtoList);
 
         //When&Then
@@ -72,9 +72,9 @@ class AttractionControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$", Matchers.hasSize(2)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].id", Matchers.is(5)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Making pasta")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Isola del Giglio")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].city", Matchers.is("Isola del Giglio")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].description", Matchers.is("tasting Wine in a beautiful restaurant")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].description", Matchers.is("Vineyard")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].priceEuro", Matchers.is(30)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].pricePln", Matchers.is(150)));
     }
@@ -93,9 +93,9 @@ class AttractionControllerTest {
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is(200))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.id", Matchers.is(5)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Making pasta")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Isola del Giglio")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.city", Matchers.is("Isola del Giglio")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("How to make pasta")))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("Making pasta")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.priceEuro", Matchers.is(30)))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.pricePln", Matchers.is(150)));
     }

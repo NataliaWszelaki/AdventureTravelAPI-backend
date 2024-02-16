@@ -24,13 +24,16 @@ class EmailServiceTest {
 
         //Given
         Mail mail = new Mail.MailBuilder()
-                .mailTo("test@test.com")
+                .mailTo("natalia.slocinska@gmail.com")
+                .toCc("test1@test.pl")
+                .toCc("test2@test.pl")
                 .subject("Test")
                 .message("Test message")
                 .build();
 
         SimpleMailMessage mailMessage = new SimpleMailMessage();
         mailMessage.setTo(mail.getMailTo());
+        mailMessage.setCc(mail.getToCcList().toArray(new String[0]));
         mailMessage.setSubject(mail.getSubject());
         mailMessage.setText(mail.getMessage());
 

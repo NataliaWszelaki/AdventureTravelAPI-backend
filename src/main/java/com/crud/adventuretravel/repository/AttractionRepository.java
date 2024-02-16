@@ -14,7 +14,7 @@ public interface AttractionRepository extends JpaRepository<Attraction, Long> {
     @Override
     List<Attraction> findAll();
 
-    boolean existsByName(String name);
+    boolean existsByTitle(String name);
 
     Attraction findByName(String name);
 }

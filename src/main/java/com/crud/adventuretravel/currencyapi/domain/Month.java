@@ -1,14 +1,16 @@
-package com.crud.adventuretravel.currencyapi.domain.status;
+package com.crud.adventuretravel.currencyapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class MonthDto {
+public class Month {
 
     @JsonProperty("total")
     private int total;

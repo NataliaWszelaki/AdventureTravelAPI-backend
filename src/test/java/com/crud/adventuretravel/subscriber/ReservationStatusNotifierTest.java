@@ -30,7 +30,7 @@ class ReservationStatusNotifierTest {
     @Mock
     private ReservationRepository reservationRepository;
 
-    private Map<String, SubscriberObserver> subscriberObserverMap;
+    private Map<Long, SubscriberObserver> subscriberObserverMap;
     private Reservation reservation;
     private ReservationStatusNotifier reservationStatusNotifier;
     private Customer customer;
@@ -56,7 +56,7 @@ class ReservationStatusNotifierTest {
         reservationStatusNotifier.fetchReservation(reservation);
 
         // Then
-        assertTrue(subscriberObserverMap.containsKey(customer.getEmail()));
+        assertTrue(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(1, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
     }
@@ -66,13 +66,13 @@ class ReservationStatusNotifierTest {
 
         // Given
         reservation.setReservationStatus(ReservationStatus.CANCELED);
-        subscriberObserverMap.put(customer.getEmail(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
+        subscriberObserverMap.put(reservation.getId(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
 
         // When
         reservationStatusNotifier.fetchReservation(reservation);
 
         // Then
-        assertFalse(subscriberObserverMap.containsKey(customer.getEmail()));
+        assertFalse(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(0, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
     }
@@ -82,14 +82,13 @@ class ReservationStatusNotifierTest {
 
         // Given
         reservation.setReservationStatus(ReservationStatus.CLOSED);
-
-        subscriberObserverMap.put(customer.getEmail(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
+        subscriberObserverMap.put(reservation.getId(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
 
         // When
         reservationStatusNotifier.fetchReservation(reservation);
 
         // Then
-        assertFalse(subscriberObserverMap.containsKey(customer.getEmail()));
+        assertFalse(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(0, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
     }
@@ -99,14 +98,14 @@ class ReservationStatusNotifierTest {
 
         // Given
         reservation.setReservationStatus(ReservationStatus.PENDING);
-        subscriberObserverMap.put(customer.getEmail(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
-        subscriberObserverMap.put("test@test.pl", new Subscriber("Eliza", "test@test.pl", emailService));
+        subscriberObserverMap.put(reservation.getId(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
+        subscriberObserverMap.put(22L, new Subscriber("Eliza", "test@test.pl", emailService));
 
         // When
         reservationStatusNotifier.fetchReservation(reservation);
 
         // Then
-        assertTrue(subscriberObserverMap.containsKey(customer.getEmail()));
+        assertTrue(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(2, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
     }
@@ -115,8 +114,7 @@ class ReservationStatusNotifierTest {
     void shouldNotifyObserversNotEmptySubscriberObserverList() {
 
         //Given
-        Subscriber subscriber = new Subscriber(customer.getFirstName(), customer.getEmail(), emailService);
-        reservationStatusNotifier.registerObserver(subscriber);
+        subscriberObserverMap.put(12L, new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
         reservation.setReservationStatus(ReservationStatus.PENDING);
         reservationStatusNotifier.currentReservation = reservation;
 
@@ -135,7 +133,6 @@ class ReservationStatusNotifierTest {
         List<Reservation> reservationList = new ArrayList<>();
         reservationList.add(reservation);
         when(reservationRepository.findAll()).thenReturn(reservationList);
-
         reservationStatusNotifier.currentReservation = reservation;
 
         //When

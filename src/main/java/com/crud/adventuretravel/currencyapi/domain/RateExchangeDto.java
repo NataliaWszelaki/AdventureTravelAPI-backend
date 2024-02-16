@@ -1,4 +1,4 @@
-package com.crud.adventuretravel.currencyapi.domain.rateexchange;
+package com.crud.adventuretravel.currencyapi.domain;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,10 +1,10 @@
 package com.crud.adventuretravel.currencyapi.service;
 
 import com.crud.adventuretravel.currencyapi.client.CurrencyapiClient;
-import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatus;
-import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatusDto;
-import com.crud.adventuretravel.currencyapi.domain.status.MonthDto;
-import com.crud.adventuretravel.currencyapi.domain.status.QuotasDto;
+import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatus;
+import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatusResponse;
+import com.crud.adventuretravel.currencyapi.domain.Month;
+import com.crud.adventuretravel.currencyapi.domain.Quotas;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,14 +26,14 @@ public class CurrencyapiStatusServiceTest {
     public void shouldFetchStatus() {
 
         //Given
-        CurrencyapiStatusDto statusDto = new CurrencyapiStatusDto();
-        MonthDto monthDto = new MonthDto();
-        monthDto.setTotal(300);
-        monthDto.setUsed(5);
-        monthDto.setRemaining(295);
-        QuotasDto quotasDto = new QuotasDto();
-        quotasDto.setMonth(monthDto);
-        statusDto.setQuotas(quotasDto);
+        CurrencyapiStatusResponse statusDto = new CurrencyapiStatusResponse();
+        Month month = new Month();
+        month.setTotal(300);
+        month.setUsed(5);
+        month.setRemaining(295);
+        Quotas quotas = new Quotas();
+        quotas.setMonth(month);
+        statusDto.setQuotas(quotas);
         when(currencyapiClient.fetchStatus()).thenReturn(statusDto);
 
         //When

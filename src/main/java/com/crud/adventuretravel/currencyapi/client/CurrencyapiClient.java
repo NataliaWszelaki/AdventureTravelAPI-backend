@@ -1,11 +1,10 @@
 package com.crud.adventuretravel.currencyapi.client;
 
 import com.crud.adventuretravel.currencyapi.config.CurrencyapiConfig;
-import com.crud.adventuretravel.currencyapi.domain.rateexchange.RateExchangeApiResponseDto;
-import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatusDto;
+import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatusResponse;
+import com.crud.adventuretravel.currencyapi.domain.RateExchangeApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
@@ -14,15 +13,15 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.net.URI;
 import java.util.Optional;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CurrencyapiClient {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(CurrencyapiClient.class);
     private final RestTemplate restTemplate;
     private final CurrencyapiConfig currencyapiConfig;
 
-    public CurrencyapiStatusDto fetchStatus() {
+    public CurrencyapiStatusResponse fetchStatus() {
 
         URI url = UriComponentsBuilder
                 .fromHttpUrl(currencyapiConfig.getCurrencyapiAPIEndpoint())
@@ -32,15 +31,15 @@ public class CurrencyapiClient {
                 .encode()
                 .toUri();
         try {
-            CurrencyapiStatusDto currencyapiStatusDto = restTemplate.getForObject(url, CurrencyapiStatusDto.class);
-            return Optional.ofNullable(currencyapiStatusDto).orElseGet(() -> new CurrencyapiStatusDto());
+            CurrencyapiStatusResponse currencyapiStatusResponse = restTemplate.getForObject(url, CurrencyapiStatusResponse.class);
+            return Optional.ofNullable(currencyapiStatusResponse).orElseGet(() -> new CurrencyapiStatusResponse());
         } catch (RestClientException e) {
-            LOGGER.error(e.getMessage(), e);
-            return new CurrencyapiStatusDto();
+            log.error("An error occurred: {}", e.getMessage(), e);
+            return new CurrencyapiStatusResponse();
         }
     }
 
-    public RateExchangeApiResponseDto fetchLatestExchangeRateEuroToPln() {
+    public RateExchangeApiResponse fetchLatestExchangeRateEuroToPln() {
 
         URI url = UriComponentsBuilder
                 .fromHttpUrl(currencyapiConfig.getCurrencyapiAPIEndpoint())
@@ -52,12 +51,11 @@ public class CurrencyapiClient {
                 .encode()
                 .toUri();
         try {
-            RateExchangeApiResponseDto rateExchangeApiResponseDto = restTemplate.getForObject(url, RateExchangeApiResponseDto.class);
-            return Optional.ofNullable(rateExchangeApiResponseDto).orElseGet(() -> new RateExchangeApiResponseDto());
+            RateExchangeApiResponse rateExchangeApiResponse = restTemplate.getForObject(url, RateExchangeApiResponse.class);
+            return Optional.ofNullable(rateExchangeApiResponse).orElseGet(() -> new RateExchangeApiResponse());
         } catch (RestClientException e) {
-            LOGGER.error(e.getMessage(), e);
-            return new RateExchangeApiResponseDto();
+            log.error("An error occurred: {}", e.getMessage(), e);
+            return new RateExchangeApiResponse();
         }
-
     }
 }

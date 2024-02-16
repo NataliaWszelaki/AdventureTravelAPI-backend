@@ -1,8 +1,8 @@
 package com.crud.adventuretravel.currencyapi.service;
 
 import com.crud.adventuretravel.currencyapi.client.CurrencyapiClient;
-import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatus;
-import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatusDto;
+import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatus;
+import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatusResponse;
 import com.crud.adventuretravel.currencyapi.mapper.CurrencyapiStatusMapper;
 import com.crud.adventuretravel.currencyapi.repository.CurrencyapiStatusRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,8 @@ public class CurrencyapiStatusService {
 
     public CurrencyapiStatus fetchStatus() {
 
-        CurrencyapiStatusDto currencyapiStatusDto = currencyapiClient.fetchStatus();
-        CurrencyapiStatus currencyapiStatus = currencyapiStatusMapper.mapToStatus(currencyapiStatusDto);
+        CurrencyapiStatusResponse currencyapiStatusResponse = currencyapiClient.fetchStatus();
+        CurrencyapiStatus currencyapiStatus = currencyapiStatusMapper.mapToStatus(currencyapiStatusResponse);
         currencyapiStatusRepository.save(currencyapiStatus);
         return currencyapiStatus;
     }

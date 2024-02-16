@@ -142,11 +142,9 @@ class ReservationControllerTest {
         // Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
-                        (localDate, type, jsonSerializationContext) ->
-                                jsonSerializationContext.serialize(localDate.toString()))
+                        (localDate, type, jsonSerializationContext) -> jsonSerializationContext.serialize(localDate.toString()))
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonDeserializer<LocalDate>)
-                        (jsonElement, type, jsonDeserializationContext) ->
-                                LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
+                        (jsonElement, type, jsonDeserializationContext) -> LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
                 .create();
         String jsonContent = gson.toJson(reservationDto);
 

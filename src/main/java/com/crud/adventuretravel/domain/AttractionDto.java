@@ -12,9 +12,12 @@ import lombok.Setter;
 public class AttractionDto {
 
     long id;
-    private String name;
+    private int location_id;
     private String city;
+    private String name;
     private String description;
+    private String category;
+    private String title;
     private int priceEuro;
     private int pricePln;
 }

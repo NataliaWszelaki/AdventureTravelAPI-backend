@@ -14,9 +14,12 @@ public class AttractionMapper {
 
         return new AttractionDto(
                 attraction.getId(),
-                attraction.getName(),
+                attraction.getLocation_id(),
                 attraction.getCity(),
+                attraction.getName(),
                 attraction.getDescription(),
+                attraction.getCategory(),
+                attraction.getTitle(),
                 attraction.getPriceEuro(),
                 attraction.getPricePln()
         );
@@ -26,9 +29,12 @@ public class AttractionMapper {
 
         return new Attraction(
                 attractionDto.getId(),
-                attractionDto.getName(),
+                attractionDto.getLocation_id(),
                 attractionDto.getCity(),
+                attractionDto.getName(),
                 attractionDto.getDescription(),
+                attractionDto.getCategory(),
+                attractionDto.getTitle(),
                 attractionDto.getPriceEuro(),
                 attractionDto.getPricePln()
         );

@@ -21,14 +21,22 @@ public class Attraction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @Column(name = "NAME")
-    private String name;
+    private int location_id;
 
     @Column(name = "CITY")
     private String city;
 
+    @Column(name = "NAME")
+    private String name;
+
     @Column(name = "DESCRIPTION")
     private String description;
+
+    @Column(name = "CATEGORY")
+    private String category;
+
+    @Column(name = "TITLE")
+    private String title;
 
     @Column(name = "PRICE_EURO")
     private int priceEuro;
@@ -39,12 +47,19 @@ public class Attraction {
     @ManyToMany(cascade = CascadeType.ALL, mappedBy = "attractionList")
     private Set<Reservation> reservationList = new HashSet<>();
 
-    public Attraction(long id, String name, String city, String description, int priceEuro, int pricePln) {
+    public Attraction(long id, int location_id, String city, String name, String description, String category, String title, int priceEuro, int pricePln) {
         this.id = id;
-        this.name = name;
+        this.location_id = location_id;
         this.city = city;
+        this.name = name;
         this.description = description;
+        this.category = category;
+        this.title = title;
         this.priceEuro = priceEuro;
         this.pricePln = pricePln;
     }
 }
+
+
+
+

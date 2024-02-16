@@ -1,7 +1,7 @@
 package com.crud.adventuretravel.currencyapi.scheduler;
 
 import com.crud.adventuretravel.config.AdminConfig;
-import com.crud.adventuretravel.currencyapi.domain.status.CurrencyapiStatus;
+import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatus;
 import com.crud.adventuretravel.currencyapi.service.CurrencyapiStatusService;
 import com.crud.adventuretravel.emailservice.EmailService;
 import com.crud.adventuretravel.emailservice.Mail;

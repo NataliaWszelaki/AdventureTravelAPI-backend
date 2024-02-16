@@ -1,8 +1,8 @@
 package com.crud.adventuretravel.currencyapi.mapper;
 
-import com.crud.adventuretravel.currencyapi.domain.rateexchange.RateExchange;
-import com.crud.adventuretravel.currencyapi.domain.rateexchange.RateExchangeApiResponseDto;
-import com.crud.adventuretravel.currencyapi.domain.rateexchange.RateExchangeDto;
+import com.crud.adventuretravel.currencyapi.domain.RateExchange;
+import com.crud.adventuretravel.currencyapi.domain.RateExchangeApiResponse;
+import com.crud.adventuretravel.currencyapi.domain.RateExchangeDto;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -10,10 +10,10 @@ import java.time.LocalDate;
 @Service
 public class RateExchangeMapper {
 
-    public RateExchange mapToRateExchange(RateExchangeApiResponseDto rateExchangeApiResponseDto) {
+    public RateExchange mapToRateExchange(RateExchangeApiResponse rateExchangeApiResponse) {
 
         return new RateExchange(
-                rateExchangeApiResponseDto.getData().getPln().getValue(),
+                rateExchangeApiResponse.getData().getPln().getValue(),
                 LocalDate.now()
         );
     }

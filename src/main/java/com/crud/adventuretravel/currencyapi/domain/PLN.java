@@ -1,13 +1,11 @@
-package com.crud.adventuretravel.currencyapi.domain.rateexchange;
+package com.crud.adventuretravel.currencyapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.Getter;
 
-@Data
+@Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class PLN {
 
     @JsonProperty("code")

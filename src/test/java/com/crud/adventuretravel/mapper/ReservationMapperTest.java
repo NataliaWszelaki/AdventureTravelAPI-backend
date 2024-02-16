@@ -49,10 +49,10 @@ class ReservationMapperTest {
                 2000, 9000);
         customer = new Customer(342L, "Johnny", "Black",
                 "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
-        attraction = new Attraction(5L, "Making pasta", "Isola del Giglio",
-                "How to make pasta", 30, 150);
-        attraction2 = new Attraction(8L, "Wine tasting", "Sienna",
-                "tasting Wine in a beautiful restaurant", 30, 150);
+        attraction = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
+                "Cooking", "How to make pasta", 30, 150);
+        attraction2 = new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
+                "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150);
         Set<Attraction> attractionSet = new HashSet<>();
         attractionSet.add(attraction);
         attractionSet.add(attraction2);
@@ -93,7 +93,7 @@ class ReservationMapperTest {
         Customer savedCustomer = customerRepository.findByEmail("black@test.com");
         long savedCustomerId = savedCustomer.getId();
         attractionRepository.save(attraction);
-        Attraction savedAttraction = attractionRepository.findByName("Making pasta");
+        Attraction savedAttraction = attractionRepository.findByName("Isola del Giglio");
         long savedAdditionalAttractionId = savedAttraction.getId();
         attractionRepository.save(attraction2);
         Attraction savedAttraction2 = attractionRepository.findByName("Wine tasting");
@@ -144,10 +144,10 @@ class ReservationMapperTest {
                 2000, 9000);
         Customer customer2 = new Customer(342L, "Johnny", "Black",
                 "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
-        Attraction attraction3 = new Attraction(5L, "Making pasta", "Isola del Giglio",
-                "How to make pasta", 30, 150);
-        Attraction attraction4 = new Attraction(8L, "Wine tasting", "Sienna",
-                "tasting Wine in a beautiful restaurant", 30, 150);
+        Attraction attraction3 = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
+                "Cooking", "How to make pasta", 30, 150);
+        Attraction attraction4 = new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
+                "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150);
         Set<Attraction> attractionSet2 = new HashSet<>();
         attractionSet2.add(attraction3);
         attractionSet2.add(attraction4);

@@ -25,7 +25,7 @@ public class Subscriber implements SubscriberObserver {
         emailService.send(
                 new Mail.MailBuilder()
                         .mailTo(email)
-                        .subject("Adventure Travel Newsletter" + subject)
+                        .subject("Adventure Travel: " + subject)
                         .message("Dear " + firstName + "! \n" + message)
                         .build());
     }
