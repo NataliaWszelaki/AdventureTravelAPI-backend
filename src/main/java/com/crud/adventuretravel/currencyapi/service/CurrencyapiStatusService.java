@@ -16,7 +16,6 @@ public class CurrencyapiStatusService {
     private final CurrencyapiStatusMapper currencyapiStatusMapper;
     private final CurrencyapiStatusRepository currencyapiStatusRepository;
 
-
     public CurrencyapiStatus fetchStatus() {
 
         CurrencyapiStatusResponse currencyapiStatusResponse = currencyapiClient.fetchStatus();

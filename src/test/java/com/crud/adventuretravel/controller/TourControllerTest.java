@@ -39,7 +39,7 @@ class TourControllerTest {
 
         tourDto = new TourDto(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
                 LocalDate.of(2024, 4, 23), LocalDate.of(2024, 5, 8),
-                "Alicante", "Alicante", 3000, 15000);
+                "Alicante", "Alicante", 3000);
     }
 
     @Test
@@ -64,7 +64,7 @@ class TourControllerTest {
         List<TourDto> tourDtoList = List.of(
                 tourDto,
                 new TourDto(8L, "German castles", "Germany", "Castles", LocalDate.of(2024, 5, 13),
-                        LocalDate.of(2024, 5, 27), "Frankfurt am Main", "Frankfurt am Main", 1500, 7000));
+                        LocalDate.of(2024, 5, 27), "Frankfurt am Main", "Frankfurt am Main", 1500));
         when(tourFacade.getTours()).thenReturn(tourDtoList);
 
         //When&Then
@@ -82,8 +82,7 @@ class TourControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].endDate", Matchers.is("2024-05-27")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].startLocation", Matchers.is("Frankfurt am Main")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].endLocation", Matchers.is("Frankfurt am Main")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].priceEuro", Matchers.is(1500)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].pricePln", Matchers.is(7000)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].priceEuro", Matchers.is(1500)));
     }
 
     @Test
@@ -108,8 +107,7 @@ class TourControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.endDate", Matchers.is("2024-05-08")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.startLocation", Matchers.is("Alicante")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.endLocation", Matchers.is("Alicante")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.priceEuro", Matchers.is(3000)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.pricePln", Matchers.is(15000)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceEuro", Matchers.is(3000)));
     }
 
     @Test
@@ -119,7 +117,7 @@ class TourControllerTest {
         Long tourId = 223L;
         when(tourFacade.getTourById(tourId)).thenThrow(TourNotFoundException.class);
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .get("/v1/tours/223")
@@ -131,7 +129,7 @@ class TourControllerTest {
     @Test
     void shouldCreateTour() throws Exception {
 
-        // Given
+        //Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -142,7 +140,7 @@ class TourControllerTest {
                 .create();
         String jsonContent = gson.toJson(tourDto);
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/v1/tours")
@@ -155,7 +153,7 @@ class TourControllerTest {
     @Test
     void shouldUpdateTour() throws Exception {
 
-        // Given
+        //Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -166,7 +164,7 @@ class TourControllerTest {
                 .create();
         String jsonContent = gson.toJson(tourDto);
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .put("/v1/tours")
@@ -177,9 +175,32 @@ class TourControllerTest {
     }
 
     @Test
+    void shouldUpdateTourDeactivate() throws Exception {
+
+        //Given
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
+                        (localDate, type, jsonSerializationContext) ->
+                                jsonSerializationContext.serialize(localDate.toString()))
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonDeserializer<LocalDate>)
+                        (jsonElement, type, jsonDeserializationContext) ->
+                                LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
+                .create();
+        String jsonContent = gson.toJson(tourDto);
+
+        //When&Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/tours/deactivate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
     void shouldDeleteTour() throws Exception {
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .delete("/v1/tours/1")

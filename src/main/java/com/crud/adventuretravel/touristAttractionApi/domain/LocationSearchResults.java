@@ -13,9 +13,10 @@ import java.util.List;
 public class LocationSearchResults {
 
     @JsonProperty("data")
-    public List<LocationSearchData> locationSearchDataList;
+    private List<LocationSearchData> locationSearchDataList;
+
     @JsonProperty("partial_content")
-    public Boolean partialContent;
+    private Boolean partialContent;
 
     public LocationSearchResults(List<LocationSearchData> locationSearchDataList) {
         this.locationSearchDataList = locationSearchDataList;

@@ -46,19 +46,24 @@ public class Tour {
     @Column(name = "PRICE_EURO")
     private int priceEuro;
 
-    @Column(name = "PRICE_PLN")
-    private int pricePln;
+    @Column(name = "ACTIVE")
+    private boolean isActive;
 
     @OneToMany(
             targetEntity = Reservation.class,
             mappedBy = "tour",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            }
     )
     private List<Reservation> reservationTourList = new ArrayList<>();
 
     public Tour(long id, String name, String country, String description, LocalDate startDate, LocalDate endDate,
-                String startLocation, String endLocation, int priceEuro, int pricePln) {
+                String startLocation, String endLocation, int priceEuro) {
         this.id = id;
         this.name = name;
         this.country = country;
@@ -68,6 +73,19 @@ public class Tour {
         this.startLocation = startLocation;
         this.endLocation = endLocation;
         this.priceEuro = priceEuro;
-        this.pricePln = pricePln;
+    }
+
+    public Tour(long id, String name, String country, String description, LocalDate startDate, LocalDate endDate,
+                String startLocation, String endLocation, int priceEuro, boolean isActive) {
+        this.id = id;
+        this.name = name;
+        this.country = country;
+        this.description = description;
+        this.startDate = startDate;
+        this.endDate = endDate;
+        this.startLocation = startLocation;
+        this.endLocation = endLocation;
+        this.priceEuro = priceEuro;
+        this.isActive = isActive;
     }
 }

@@ -25,7 +25,7 @@ public class TourController {
         return ResponseEntity.ok(tourFacade.getTours());
     }
 
-    @GetMapping(value = "{tourId}")
+    @GetMapping(value = "/{tourId}")
     public ResponseEntity<TourDto> getTourById(@PathVariable Long tourId) throws TourNotFoundException {
 
         return ResponseEntity.ok(tourFacade.getTourById(tourId));
@@ -42,6 +42,13 @@ public class TourController {
     public ResponseEntity<Void> updateTour(@RequestBody TourDto tourDto) throws TourNotFoundException {
 
         tourFacade.updateTour(tourDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/deactivate")
+    public ResponseEntity<Void> updateTourDeactivate(@RequestBody TourDto tourDto) throws TourNotFoundException {
+
+        tourFacade.updateTourDeactivate(tourDto);
         return ResponseEntity.ok().build();
     }
 

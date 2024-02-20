@@ -13,15 +13,20 @@ import java.util.List;
 public class AttractionDetailsData {
 
     @JsonProperty("location_id")
-    public String location_id;
+    private String location_id;
+
     @JsonProperty("name")
-    public String name;
+    private String name;
+
     @JsonProperty("description")
-    public String description;
+    private String description;
+
     @JsonProperty("parent_display_name")
-    public String parentDisplayName;
+    private String parentDisplayName;
+
     @JsonProperty("subcategory")
-    public List<AttractionDetailsSubcategory> attractionDetailsSubcategoryList;
+    private List<AttractionDetailsSubcategory> attractionDetailsSubcategoryList;
+
     @JsonProperty("offer_group")
-    public AttractionDetailsOfferGroup attractionDetailsOfferGroup;
+    private AttractionDetailsOfferGroup attractionDetailsOfferGroup;
 }

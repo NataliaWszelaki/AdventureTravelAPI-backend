@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,9 @@ public class AttractionFacade {
 
     public List<AttractionDto> getAttractions() {
 
-        List<Attraction> attractionList = attractionDBService.getAllAttractions();
+        List<Attraction> attractionList = attractionDBService.getAllAttractions().stream()
+                .filter(a -> a.isActive())
+                .collect(Collectors.toList());
         return attractionMapper.mapToAttractionDtoList(attractionList);
     }
 
@@ -43,6 +46,11 @@ public class AttractionFacade {
 
         Attraction attraction = attractionMapper.mapToAttraction(attractionDto);
         attractionDBService.updateAttraction(attraction);
+    }
+
+    public void updateAttractionDeactivate(AttractionDto attractionDto) throws AttractionNotFoundException {
+
+        attractionDBService.updateAttractionDeactivate(attractionDto);
     }
     
     public void deleteAttraction(long attractionId) {

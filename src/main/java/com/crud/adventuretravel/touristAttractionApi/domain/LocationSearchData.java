@@ -11,11 +11,13 @@ import lombok.Getter;
 public class LocationSearchData {
 
     @JsonProperty("result_type")
-    public String resultType;
+    private String resultType;
+
     @JsonProperty("result_object")
-    public LocationSearchResultObject locationSearchResultObject;
+    private LocationSearchResultObject locationSearchResultObject;
+
     @JsonProperty("scope")
-    public String scope;
+    private String scope;
 
     public LocationSearchData(LocationSearchResultObject locationSearchResultObject) {
         this.locationSearchResultObject = locationSearchResultObject;

@@ -1,6 +1,7 @@
 package com.crud.adventuretravel.service;
 
 import com.crud.adventuretravel.domain.Attraction;
+import com.crud.adventuretravel.domain.AttractionDto;
 import com.crud.adventuretravel.exception.AttractionAlreadyExistsException;
 import com.crud.adventuretravel.exception.AttractionNotFoundException;
 import com.crud.adventuretravel.repository.AttractionRepository;
@@ -29,6 +30,7 @@ public class AttractionDBService {
 
         boolean isExisting = attractionRepository.existsByTitle(attraction.getTitle());
         if (!isExisting) {
+            attraction.setActive(true);
             attractionRepository.save(attraction);
         } else {
             throw new AttractionAlreadyExistsException();
@@ -37,8 +39,20 @@ public class AttractionDBService {
 
     public void updateAttraction(Attraction attraction) throws AttractionNotFoundException {
 
-        boolean isExisting = attractionRepository.existsByTitle(attraction.getTitle());
-        if (isExisting) {
+        Attraction searchedAttraction = attractionRepository.findById(attraction.getId()).orElse(null);
+        if (searchedAttraction != null) {
+            attraction.setActive(true);
+            attractionRepository.save(attraction);
+        } else {
+            throw new AttractionNotFoundException();
+        }
+    }
+
+    public void updateAttractionDeactivate(AttractionDto attractionDto) throws AttractionNotFoundException {
+
+        Attraction attraction = attractionRepository.findById(attractionDto.getId()).orElse(null);
+        if (attraction != null) {
+            attraction.setActive(false);
             attractionRepository.save(attraction);
         } else {
             throw new AttractionNotFoundException();

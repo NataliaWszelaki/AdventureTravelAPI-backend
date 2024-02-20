@@ -25,7 +25,7 @@ class TourMapperTest {
         //Given
         Tour tour = new Tour(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
                 LocalDate.of(2024, 4, 23), LocalDate.of(2024, 5, 8),
-                "Alicante", "Alicante", 3000, 15000);
+                "Alicante", "Alicante", 3000);
 
         //When
         TourDto mappedTourDto = tourMapper.mapToTourDto(tour);
@@ -40,7 +40,6 @@ class TourMapperTest {
         assertEquals("Alicante", mappedTourDto.getStartLocation());
         assertEquals("Alicante", mappedTourDto.getEndLocation());
         assertEquals(3000, mappedTourDto.getPriceEuro());
-        assertEquals(15000, mappedTourDto.getPricePln());
     }
 
     @Test
@@ -49,7 +48,7 @@ class TourMapperTest {
         //Given
         TourDto tourDto = new TourDto(7L, "Costa Blanca in Spring", "Spain", "Sightseeing",
                 LocalDate.of(2024, 4, 23), LocalDate.of(2024, 5, 8),
-                "Alicante", "Alicante", 3000, 15000);
+                "Alicante", "Alicante", 3000);
 
         //When
         Tour mappedTour = tourMapper.mapToTour(tourDto);
@@ -64,7 +63,6 @@ class TourMapperTest {
         assertEquals("Alicante", mappedTour.getStartLocation());
         assertEquals("Alicante", mappedTour.getEndLocation());
         assertEquals(3000, mappedTour.getPriceEuro());
-        assertEquals(15000, mappedTour.getPricePln());
     }
 
     @Test
@@ -74,10 +72,10 @@ class TourMapperTest {
         List<Tour> tourList = List.of(
                 new Tour(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
                         LocalDate.of(2024, 4, 23), LocalDate.of(2024, 5, 8),
-                        "Alicante", "Alicante", 3000, 15000),
+                        "Alicante", "Alicante", 3000),
                 new Tour(8L, "German castles", "Germany", "Castles",
                         LocalDate.of(2024, 5, 13), LocalDate.of(2024, 5, 27),
-                        "Frankfurt am Main", "Frankfurt am Main", 1500, 7000));
+                        "Frankfurt am Main", "Frankfurt am Main", 1500));
 
         //When
         List<TourDto> tourDtoList = tourMapper.mapToTourDtoList(tourList);
@@ -93,6 +91,5 @@ class TourMapperTest {
         assertEquals("Frankfurt am Main", tourDtoList.get(1).getStartLocation());
         assertEquals("Frankfurt am Main", tourDtoList.get(1).getEndLocation());
         assertEquals(1500, tourDtoList.get(1).getPriceEuro());
-        assertEquals(7000, tourDtoList.get(1).getPricePln());
     }
 }

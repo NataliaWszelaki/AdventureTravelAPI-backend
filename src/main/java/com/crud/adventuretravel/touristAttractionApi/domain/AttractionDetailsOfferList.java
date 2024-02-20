@@ -6,38 +6,39 @@ import lombok.*;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttractionDetailsOfferList {
 
     @JsonProperty("url")
-    public String url;
+    private String url;
 
     @JsonProperty("price")
-    public String price;
+    private String price;
 
     @JsonProperty("rounded_up_price")
-    public String roundedUpPrice;
+    private String roundedUpPrice;
 
-    @JsonProperty("offer_type")
-    public String offerType;
+//    @JsonProperty("offer_type")
+//    private String offerType;
 
     @JsonProperty("title")
-    public String title;
+    private String title;
 
-    @JsonProperty("product_code")
-    public String productCode;
+//    @JsonProperty("product_code")
+//    private String productCode;
 
-    @JsonProperty("partner")
-    public String partner;
+//    @JsonProperty("partner")
+//    private String partner;
 
-    @JsonProperty("image_url")
-    public String imageUrl;
+//    @JsonProperty("image_url")
+//    private String imageUrl;
 
-    @JsonProperty("description")
-    public String description;
+//    @JsonProperty("description")
+//    private String description;
 
-    @JsonProperty("primary_category")
-    public String primaryCategory;
+//    @JsonProperty("primary_category")
+//    private String primaryCategory;
 
     public AttractionDetailsOfferList(String roundedUpPrice, String title) {
         this.roundedUpPrice = roundedUpPrice;

@@ -139,7 +139,7 @@ class ReservationControllerTest {
     @Test
     void shouldCreateReservation() throws Exception {
 
-        // Given
+        //Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) -> jsonSerializationContext.serialize(localDate.toString()))
@@ -148,7 +148,7 @@ class ReservationControllerTest {
                 .create();
         String jsonContent = gson.toJson(reservationDto);
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .post("/v1/reservations")
@@ -161,7 +161,7 @@ class ReservationControllerTest {
     @Test
     void shouldUpdateReservation() throws Exception {
 
-        // Given
+        //Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -172,7 +172,7 @@ class ReservationControllerTest {
                 .create();
         String jsonContent = gson.toJson(reservationDto);
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .put("/v1/reservations")
@@ -183,9 +183,33 @@ class ReservationControllerTest {
     }
 
     @Test
+    void shouldUpdateReservationDeactivate() throws Exception {
+
+        //Given
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
+                        (localDate, type, jsonSerializationContext) ->
+                                jsonSerializationContext.serialize(localDate.toString()))
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonDeserializer<LocalDate>)
+                        (jsonElement, type, jsonDeserializationContext) ->
+                                LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
+                .create();
+        String jsonContent = gson.toJson(reservationDto);
+
+        //When&Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/reservations/deactivate")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
     void shouldDeleteReservation() throws Exception {
 
-        //When & Then
+        //When&Then
         mockMvc
                 .perform(MockMvcRequestBuilders
                         .delete("/v1/reservations/1")

@@ -121,7 +121,7 @@ class CustomerControllerTest {
     @Test
     void shouldCreateCustomer() throws Exception {
 
-        // Given
+        //Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -145,7 +145,7 @@ class CustomerControllerTest {
     @Test
     void shouldUpdateCustomer() throws Exception {
 
-        // Given
+        //Given
         Gson gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
                         (localDate, type, jsonSerializationContext) ->
@@ -162,6 +162,29 @@ class CustomerControllerTest {
                         .put("/v1/customers")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
+    void shouldUpdateCustomerDeactivate() throws Exception {
+
+        //Given
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
+                        (localDate, type, jsonSerializationContext) ->
+                                jsonSerializationContext.serialize(localDate.toString()))
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonDeserializer<LocalDate>)
+                        (jsonElement, type, jsonDeserializationContext) ->
+                                LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
+                .create();
+        String jsonContent = gson.toJson(customerDto);
+
+        //When&Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/customers/deactivate")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
     }

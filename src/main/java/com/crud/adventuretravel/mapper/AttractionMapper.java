@@ -20,8 +20,7 @@ public class AttractionMapper {
                 attraction.getDescription(),
                 attraction.getCategory(),
                 attraction.getTitle(),
-                attraction.getPriceEuro(),
-                attraction.getPricePln()
+                attraction.getPriceEuro()
         );
     }
 
@@ -35,8 +34,7 @@ public class AttractionMapper {
                 attractionDto.getDescription(),
                 attractionDto.getCategory(),
                 attractionDto.getTitle(),
-                attractionDto.getPriceEuro(),
-                attractionDto.getPricePln()
+                attractionDto.getPriceEuro()
         );
     }
 

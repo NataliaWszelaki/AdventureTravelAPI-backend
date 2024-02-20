@@ -19,5 +19,4 @@ public class AttractionDto {
     private String category;
     private String title;
     private int priceEuro;
-    private int pricePln;
 }

@@ -23,7 +23,7 @@ class AttractionMapperTest {
 
         //Given
         Attraction attraction = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
 
         //When
         AttractionDto mappedAttractionDto = attractionMapper.mapToAttractionDto(attraction);
@@ -34,7 +34,6 @@ class AttractionMapperTest {
         assertEquals("Isola del Giglio", mappedAttractionDto.getCity());
         assertEquals("Making pasta", mappedAttractionDto.getDescription());
         assertEquals(30, mappedAttractionDto.getPriceEuro());
-        assertEquals(150, mappedAttractionDto.getPricePln());
     }
 
     @Test
@@ -42,7 +41,7 @@ class AttractionMapperTest {
 
         //Given
         AttractionDto attractionDto = new AttractionDto(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
 
         //When
         Attraction mappedAttraction = attractionMapper.mapToAttraction(attractionDto);
@@ -53,7 +52,6 @@ class AttractionMapperTest {
         assertEquals("Isola del Giglio", mappedAttraction.getCity());
         assertEquals("Making pasta", mappedAttraction.getDescription());
         assertEquals(30, mappedAttraction.getPriceEuro());
-        assertEquals(150, mappedAttraction.getPricePln());
     }
 
     @Test
@@ -62,9 +60,9 @@ class AttractionMapperTest {
         //Given
         List<Attraction> attractionList = List.of(
                 new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                        "Cooking", "How to make pasta", 30, 150),
+                        "Cooking", "How to make pasta", 30),
                 new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
-                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30));
 
         //When
         List<AttractionDto> attractionDtoList = attractionMapper.mapToAttractionDtoList(attractionList);
@@ -78,6 +76,5 @@ class AttractionMapperTest {
         assertEquals("Isola del Giglio", attractionDtoList.get(0).getCity());
         assertEquals("Vineyard", attractionDtoList.get(1).getDescription());
         assertEquals(30, attractionDtoList.get(1).getPriceEuro());
-        assertEquals(150, attractionDtoList.get(1).getPricePln());
     }
 }

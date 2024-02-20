@@ -58,9 +58,10 @@ class CustomerFacadeTest {
     void shouldFetchCustomerList() {
 
         //Given
+        customer.setActive(true);
         List<Customer> customerList = List.of(
                 new Customer(12L, "John", "Smith", "john@test.com", 123456,
-                        LocalDate.of(2021, 12, 12), true),
+                        LocalDate.of(2021, 12, 12), true, true),
                 customer);
 
         List<CustomerDto> customerDtoList = List.of(
@@ -131,6 +132,16 @@ class CustomerFacadeTest {
         verify(newTourNotifier, times(1)).checkSubscriptionUpdatedCustomer(customer);
         verify(newAttractionNotifier, times(1)).checkSubscriptionUpdatedCustomer(customer);
         verify(customerDBService, times(1)).updateCustomer(customer);
+    }
+
+    @Test
+    void shouldUpdateCustomerDeactivate() throws Exception {
+
+        //When
+        customerFacade.updateCustomerDeactivate(customerDto);
+
+        //Then
+        verify(customerDBService, times(1)).updateCustomerDeactivate(customerDto);
     }
 
     @Test

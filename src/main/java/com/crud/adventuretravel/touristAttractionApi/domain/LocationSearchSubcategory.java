@@ -9,7 +9,8 @@ import lombok.Getter;
 public class LocationSearchSubcategory {
 
     @JsonProperty("key")
-    public String key;
+    private String key;
+
     @JsonProperty("name")
-    public String name;
+    private String name;
 }

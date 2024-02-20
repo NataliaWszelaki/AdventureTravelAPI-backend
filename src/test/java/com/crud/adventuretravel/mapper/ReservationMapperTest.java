@@ -46,13 +46,13 @@ class ReservationMapperTest {
     void setUp() {
         tour = new Tour(3L, "Italy-Tour", "Italy", "Italy-Tour description", LocalDate.of(2024, 5, 5),
                 LocalDate.of(2024, 5, 17), "Rome", "Bari",
-                2000, 9000);
+                2000);
         customer = new Customer(342L, "Johnny", "Black",
                 "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
         attraction = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
         attraction2 = new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
-                "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150);
+                "Tasting Wine in a beautiful restaurant", "Private tour", 30);
         Set<Attraction> attractionSet = new HashSet<>();
         attractionSet.add(attraction);
         attractionSet.add(attraction2);
@@ -141,13 +141,13 @@ class ReservationMapperTest {
         //Given
         Tour tour2 = new Tour(3L, "Italy-Tour", "Italy", "Italy-Tour description", LocalDate.of(2024, 5, 5),
                 LocalDate.of(2024, 5, 17), "Rome", "Bari",
-                2000, 9000);
+                2000);
         Customer customer2 = new Customer(342L, "Johnny", "Black",
                 "black@test.com", 223456, LocalDate.of(2023, 2, 18), true);
         Attraction attraction3 = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
         Attraction attraction4 = new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
-                "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150);
+                "Tasting Wine in a beautiful restaurant", "Private tour", 30);
         Set<Attraction> attractionSet2 = new HashSet<>();
         attractionSet2.add(attraction3);
         attractionSet2.add(attraction4);

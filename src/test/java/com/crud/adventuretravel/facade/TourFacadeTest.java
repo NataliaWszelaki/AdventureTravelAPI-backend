@@ -46,24 +46,25 @@ class TourFacadeTest {
 
         tour = new Tour(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
                 LocalDate.of(2024,4,23), LocalDate.of(2024,5,8),
-                "Alicante", "Alicante", 3000, 15000);
+                "Alicante", "Alicante", 3000);
         tourDto = new TourDto(5L, "Costa Blanca in Spring", "Spain", "Sightseeing",
                 LocalDate.of(2024,4,23), LocalDate.of(2024,5,8),
-                "Alicante", "Alicante", 3000, 15000);
+                "Alicante", "Alicante", 3000);
     }
 
     @Test
     void shouldFetchTourList() {
 
         //Given
+        tour.setActive(true);
         List<Tour> tourList = List.of(
                 tour,
                 new Tour(8L, "German castles", "Germany", "Castles", LocalDate.of(2024,5,13),
-                        LocalDate.of(2024,5,27), "Frankfurt am Main", "Frankfurt am Main",1500, 7000));
+                        LocalDate.of(2024,5,27), "Frankfurt am Main", "Frankfurt am Main",1500, true));
         List<TourDto> tourDtoList = List.of(
                 tourDto,
                 new TourDto(8L, "German castles", "Germany", "Castles", LocalDate.of(2024,5,13),
-                        LocalDate.of(2024,5,27), "Frankfurt am Main", "Frankfurt am Main",1500, 7000));
+                        LocalDate.of(2024,5,27), "Frankfurt am Main", "Frankfurt am Main",1500));
         when(tourDBService.getAllTours()).thenReturn(tourList);
         when(tourMapper.mapToTourDtoList(tourList)).thenReturn(tourDtoList);
 
@@ -125,6 +126,16 @@ class TourFacadeTest {
 
         //Then
         verify(tourDBService, times(1)).updateTour(tour);
+    }
+
+    @Test
+    void shouldUpdateTourDeactivate() throws Exception {
+
+        //When
+        tourFacade.updateTourDeactivate(tourDto);
+
+        //Then
+        verify(tourDBService, times(1)).updateTourDeactivate(tourDto);
     }
 
     @Test

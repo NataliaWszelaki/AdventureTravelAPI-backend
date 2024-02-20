@@ -1,4 +1,4 @@
-package com.crud.adventuretravel.currencyapi.scheduler;
+package com.crud.adventuretravel.scheduler;
 
 import com.crud.adventuretravel.config.AdminConfig;
 import com.crud.adventuretravel.currencyapi.domain.CurrencyapiStatus;
@@ -20,7 +20,6 @@ public class CurrencyapiStatusScheduler {
 
 
     @Scheduled(cron = "0 0 1 * * *")
-//    @Scheduled(fixedRate = 10000000)
     public void saveCurrencyStatus() {
 
         CurrencyapiStatus currencyapiStatus = currencyapiStatusService.fetchStatus();

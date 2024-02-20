@@ -4,25 +4,30 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class LocationSearchAncestor {
 
     @JsonProperty("subcategory")
-    public List<LocationSearchSubcategory> locationSearchSubcategoryList;
-    @JsonProperty("name")
-    public String name;
-    @JsonProperty("abbrv")
-    public Object abbrv;
-    @JsonProperty("location_id")
-    public String locationId;
+    private List<LocationSearchSubcategory> locationSearchSubcategoryList;
 
-    public LocationSearchAncestor(List<LocationSearchSubcategory> locationSearchSubcategoryList, String name) {
-        this.locationSearchSubcategoryList = locationSearchSubcategoryList;
-        this.name = name;
-    }
+    @JsonProperty("name")
+    private String name;
+
+//    @JsonProperty("abbrv")
+//    private Object abbrv;
+
+//    @JsonProperty("location_id")
+//    private String locationId;
+//
+//    public LocationSearchAncestor(List<LocationSearchSubcategory> locationSearchSubcategoryList, String name) {
+//        this.locationSearchSubcategoryList = locationSearchSubcategoryList;
+//        this.name = name;
+//    }
 }

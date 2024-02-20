@@ -21,6 +21,7 @@ public class ReservationStatusNotifier implements NotifierObservable {
     protected Reservation currentReservation;
 
     public void fetchReservation(Reservation reservation) {
+
         this.currentReservation = reservation;
         Subscriber subscriber = Subscriber.fromCustomer(reservation.getCustomer(), emailService);
         if (reservation.getReservationStatus() == ReservationStatus.NEW) {
@@ -34,10 +35,8 @@ public class ReservationStatusNotifier implements NotifierObservable {
         }
     }
 
-
     @Override
     public void registerObserver(SubscriberObserver subscriberObserver) {
-
 
         subscriberObserverMap.put(currentReservation.getId(), subscriberObserver);
     }

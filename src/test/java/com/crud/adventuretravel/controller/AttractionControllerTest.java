@@ -4,6 +4,7 @@ import com.crud.adventuretravel.domain.AttractionDto;
 import com.crud.adventuretravel.exception.AttractionNotFoundException;
 import com.crud.adventuretravel.facade.AttractionFacade;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static org.mockito.Mockito.*;
@@ -36,7 +38,7 @@ class AttractionControllerTest {
     void setUp() {
 
         attractionDto = new AttractionDto(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
     }
 
     @Test
@@ -61,7 +63,7 @@ class AttractionControllerTest {
         List<AttractionDto> attractionDtoList = List.of(
                 attractionDto,
                 new AttractionDto(8L, 234, "Sienna", "Wine tasting", "Vineyard",
-                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30));
         when(attractionFacade.getAttractions()).thenReturn(attractionDtoList);
 
         //When&Then
@@ -75,8 +77,7 @@ class AttractionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].name", Matchers.is("Isola del Giglio")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[0].city", Matchers.is("Isola del Giglio")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$[1].description", Matchers.is("Vineyard")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].priceEuro", Matchers.is(30)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$[1].pricePln", Matchers.is(150)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$[1].priceEuro", Matchers.is(30)));
     }
 
     @Test
@@ -96,8 +97,7 @@ class AttractionControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.name", Matchers.is("Isola del Giglio")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.city", Matchers.is("Isola del Giglio")))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.description", Matchers.is("Making pasta")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.priceEuro", Matchers.is(30)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.pricePln", Matchers.is(150)));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.priceEuro", Matchers.is(30)));
     }
 
     @Test
@@ -146,6 +146,29 @@ class AttractionControllerTest {
                         .put("/v1/attractions")
                         .contentType(MediaType.APPLICATION_JSON)
                         .characterEncoding("UTF-8")
+                        .content(jsonContent))
+                .andExpect(MockMvcResultMatchers.status().is(200));
+    }
+
+    @Test
+    void shouldUpdateAttractionDeactivate() throws Exception {
+
+        // Given
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonSerializer<LocalDate>)
+                        (localDate, type, jsonSerializationContext) ->
+                                jsonSerializationContext.serialize(localDate.toString()))
+                .registerTypeAdapter(LocalDate.class, (com.google.gson.JsonDeserializer<LocalDate>)
+                        (jsonElement, type, jsonDeserializationContext) ->
+                                LocalDate.parse(jsonElement.getAsJsonPrimitive().getAsString()))
+                .create();
+        String jsonContent = gson.toJson(attractionDto);
+
+        //When&Then
+        mockMvc
+                .perform(MockMvcRequestBuilders
+                        .put("/v1/attractions/deactivate")
+                        .contentType(MediaType.APPLICATION_JSON)
                         .content(jsonContent))
                 .andExpect(MockMvcResultMatchers.status().is(200));
     }

@@ -22,5 +22,4 @@ public class TourDto {
     private String startLocation;
     private String endLocation;
     private int priceEuro;
-    private int pricePln;
 }

@@ -26,22 +26,33 @@ public class AttractionController {
     }
 
     @GetMapping(value = "{attractionId}")
-    public ResponseEntity<AttractionDto> getAttractionById(@PathVariable Long attractionId) throws AttractionNotFoundException {
+    public ResponseEntity<AttractionDto> getAttractionById(@PathVariable Long attractionId)
+            throws AttractionNotFoundException {
 
         return ResponseEntity.ok(attractionFacade.getAttractionById(attractionId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createAttraction(@RequestBody AttractionDto attractionDto) throws AttractionAlreadyExistsException {
+    public ResponseEntity<Void> createAttraction(@RequestBody AttractionDto attractionDto)
+            throws AttractionAlreadyExistsException {
 
         attractionFacade.createAttraction(attractionDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateAttraction(@RequestBody AttractionDto attractionDto) throws AttractionNotFoundException {
+    public ResponseEntity<Void> updateAttraction(@RequestBody AttractionDto attractionDto)
+            throws AttractionNotFoundException {
 
         attractionFacade.updateAttraction(attractionDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/deactivate")
+    public ResponseEntity<Void> updateAttractionDeactivate(@RequestBody AttractionDto attractionDto)
+            throws AttractionNotFoundException{
+
+        attractionFacade.updateAttractionDeactivate(attractionDto);
         return ResponseEntity.ok().build();
     }
 

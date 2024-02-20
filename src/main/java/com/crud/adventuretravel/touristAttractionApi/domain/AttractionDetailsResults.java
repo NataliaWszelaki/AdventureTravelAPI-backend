@@ -12,10 +12,10 @@ import java.util.List;
 public class AttractionDetailsResults {
 
     @JsonProperty("data")
-    public List<AttractionDetailsData> attractionDetailsDataList;
+    private List<AttractionDetailsData> attractionDetailsDataList;
 
     @JsonProperty("paging")
-    public AttractionDetailsPaging attractionDetailsPaging;
+    private AttractionDetailsPaging attractionDetailsPaging;
 
     public AttractionDetailsResults(List<AttractionDetailsData> attractionDetailsDataList) {
         this.attractionDetailsDataList = attractionDetailsDataList;

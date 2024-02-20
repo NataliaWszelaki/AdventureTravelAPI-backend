@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -23,7 +24,9 @@ public class ReservationFacade {
 
     public List<ReservationDto> getReservations() {
 
-        List<Reservation> reservationList = reservationDBService.getAllReservations();
+        List<Reservation> reservationList = reservationDBService.getAllReservations().stream()
+                .filter(r -> r.isActive())
+                .collect(Collectors.toList());
         return reservationMapper.mapToReservationDtoList(reservationList);
     }
 
@@ -45,6 +48,11 @@ public class ReservationFacade {
         Reservation reservation = reservationMapper.mapToReservation(reservationDto);
         reservationStatusNotifier.fetchReservation(reservation);
         reservationDBService.updateReservation(reservation);
+    }
+
+    public void updateReservationDeactivate(ReservationDto reservationDto) throws ReservationNotFoundException {
+
+        reservationDBService.updateReservationDeactivate(reservationDto);
     }
 
     public void deleteReservation(long reservationId) {

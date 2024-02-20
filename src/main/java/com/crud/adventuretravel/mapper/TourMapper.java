@@ -21,8 +21,7 @@ public class TourMapper {
                 tour.getEndDate(),
                 tour.getStartLocation(),
                 tour.getEndLocation(),
-                tour.getPriceEuro(),
-                tour.getPricePln()
+                tour.getPriceEuro()
         );
     }
 
@@ -37,8 +36,7 @@ public class TourMapper {
                 tourDto.getEndDate(),
                 tourDto.getStartLocation(),
                 tourDto.getEndLocation(),
-                tourDto.getPriceEuro(),
-                tourDto.getPricePln()
+                tourDto.getPriceEuro()
         );
     }
 

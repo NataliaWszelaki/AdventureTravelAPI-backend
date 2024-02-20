@@ -44,24 +44,25 @@ class AttractionFacadeTest {
     void setUp() {
 
         attraction = new Attraction(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
 
         attractionDto = new AttractionDto(5L, 123, "Isola del Giglio", "Isola del Giglio", "Making pasta",
-                "Cooking", "How to make pasta", 30, 150);
+                "Cooking", "How to make pasta", 30);
     }
 
     @Test
     void shouldFetchAttractionList() {
 
         //Given
+        attraction.setActive(true);
         List<Attraction> attractionList = List.of(
                 attraction,
                 new Attraction(8L, 234, "Sienna", "Wine tasting", "Vineyard",
-                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, true));
         List<AttractionDto> attractionDtoList = List.of(
                 attractionDto,
                 new AttractionDto(8L, 234, "Sienna", "Wine tasting", "Vineyard",
-                        "Tasting Wine in a beautiful restaurant", "Private tour", 30, 150));
+                        "Tasting Wine in a beautiful restaurant", "Private tour", 30));
         when(attractionDBService.getAllAttractions()).thenReturn(attractionList);
         when(attractionMapper.mapToAttractionDtoList(attractionList)).thenReturn(attractionDtoList);
 
@@ -123,6 +124,16 @@ class AttractionFacadeTest {
 
         //Then
         verify(attractionDBService, times(1)).updateAttraction(attraction);
+    }
+
+    @Test
+    void shouldUpdateAttractionDeactivate() throws Exception {
+
+        //When
+        attractionFacade.updateAttractionDeactivate(attractionDto);
+
+        //Then
+        verify(attractionDBService, times(1)).updateAttractionDeactivate(attractionDto);
     }
 
     @Test

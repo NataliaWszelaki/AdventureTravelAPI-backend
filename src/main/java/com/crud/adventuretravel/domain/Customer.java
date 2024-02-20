@@ -44,18 +44,27 @@ public class Customer {
     @Column(name = "ACCOUNT_CREATION_DATE")
     private LocalDate accountCreationDate;
 
-    @Column(name = "NEWSLETTER")
+    @Column(name = "SUBSCRIBER")
     private boolean subscriber;
+
+    @Column(name = "ACTIVE")
+    private boolean isActive;
 
     @OneToMany(
             targetEntity = Reservation.class,
             mappedBy = "customer",
-            cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
+            fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            }
     )
     private List<Reservation> reservationCustomerList = new ArrayList<>();
 
-    public Customer(String firstName, String lastName, String email, int phoneNumber, LocalDate accountCreationDate, boolean subscriber) {
+    public Customer(String firstName, String lastName, String email, int phoneNumber,
+                    LocalDate accountCreationDate, boolean subscriber) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
@@ -64,7 +73,8 @@ public class Customer {
         this.subscriber = subscriber;
     }
 
-    public Customer(long id, String firstName, String lastName, String email, int phoneNumber, LocalDate accountCreationDate, boolean subscriber) {
+    public Customer(long id, String firstName, String lastName, String email, int phoneNumber,
+                    LocalDate accountCreationDate, boolean subscriber) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -72,5 +82,17 @@ public class Customer {
         this.phoneNumber = phoneNumber;
         this.accountCreationDate = accountCreationDate;
         this.subscriber = subscriber;
+    }
+
+    public Customer(long id, String firstName, String lastName, String email, int phoneNumber,
+                    LocalDate accountCreationDate, boolean subscriber, boolean isActive) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.accountCreationDate = accountCreationDate;
+        this.subscriber = subscriber;
+        this.isActive = isActive;
     }
 }

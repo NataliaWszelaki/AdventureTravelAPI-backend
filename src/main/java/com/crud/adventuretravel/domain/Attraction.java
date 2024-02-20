@@ -21,6 +21,7 @@ public class Attraction {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    @Column(name = "LOCATION_ID")
     private int location_id;
 
     @Column(name = "CITY")
@@ -41,13 +42,21 @@ public class Attraction {
     @Column(name = "PRICE_EURO")
     private int priceEuro;
 
-    @Column(name = "PRICE_PLN")
-    private int pricePln;
+    @Column(name = "ACTIVE")
+    private boolean isActive;
 
-    @ManyToMany(cascade = CascadeType.ALL, mappedBy = "attractionList")
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade = {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            },
+            mappedBy = "attractionList")
     private Set<Reservation> reservationList = new HashSet<>();
 
-    public Attraction(long id, int location_id, String city, String name, String description, String category, String title, int priceEuro, int pricePln) {
+    public Attraction(long id, int location_id, String city, String name, String description, String category,
+                      String title, int priceEuro) {
         this.id = id;
         this.location_id = location_id;
         this.city = city;
@@ -56,7 +65,19 @@ public class Attraction {
         this.category = category;
         this.title = title;
         this.priceEuro = priceEuro;
-        this.pricePln = pricePln;
+    }
+
+    public Attraction(long id, int location_id, String city, String name, String description, String category,
+                      String title, int priceEuro, boolean isActive) {
+        this.id = id;
+        this.location_id = location_id;
+        this.city = city;
+        this.name = name;
+        this.description = description;
+        this.category = category;
+        this.title = title;
+        this.priceEuro = priceEuro;
+        this.isActive = isActive;
     }
 }
 

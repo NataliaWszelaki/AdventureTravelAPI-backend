@@ -13,5 +13,4 @@ public class PLN {
 
     @JsonProperty("value")
     private double value;
-
 }

@@ -1,4 +1,4 @@
-package com.crud.adventuretravel.currencyapi.scheduler;
+package com.crud.adventuretravel.scheduler;
 
 import com.crud.adventuretravel.config.AdminConfig;
 import com.crud.adventuretravel.currencyapi.service.RateExchangeService;
@@ -21,6 +21,7 @@ public class RateExchangeScheduler {
 
     @Scheduled(cron = "0 0 1 * * *")
     public void fetchRateExchange() {
+
         log.info("Initiating data retrieval from Currencyapi...");
         try {
             rateExchangeService.fetchLatestExchangeRateEuroToPln();

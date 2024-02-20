@@ -49,6 +49,14 @@ public class ReservationController {
         return ResponseEntity.ok().build();
     }
 
+    @PutMapping(value = "/deactivate")
+    public ResponseEntity<Void> updateReservationDeactivate(@RequestBody ReservationDto reservationDto)
+            throws ReservationNotFoundException {
+
+        reservationFacade.updateReservationDeactivate(reservationDto);
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping(value = "/{reservationId}")
     public ResponseEntity<Void> deleteReservation(@PathVariable Long reservationId) {
 

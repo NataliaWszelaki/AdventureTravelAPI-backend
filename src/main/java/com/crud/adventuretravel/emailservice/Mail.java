@@ -12,11 +12,12 @@ import java.util.List;
 public final class Mail {
 
     private final String mailTo;
-    private List<String> toCcList = new ArrayList<>();
+    private List<String> toCcList;
     private final String subject;
     private final String message;
 
     public static class MailBuilder {
+
         private String mailTo;
         private List<String> toCcList = new ArrayList<>();
         private String subject;

@@ -20,7 +20,6 @@ public class RateExchangeService {
     private final RateExchangeMapper rateExchangeMapper;
     private final RateExchangeRepository rateExchangeRepository;
 
-
     public RateExchange fetchLatestExchangeRateEuroToPln() {
 
         boolean isExisting = rateExchangeRepository.existsByRateExchangeDate(LocalDate.now());

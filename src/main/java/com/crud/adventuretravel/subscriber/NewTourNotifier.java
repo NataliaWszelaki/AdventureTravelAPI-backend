@@ -54,9 +54,8 @@ public class NewTourNotifier implements NotifierObservable {
         }
         for (SubscriberObserver subscriberObserver : subscriberObserverList) {
             subscriberObserver.update("Exciting News: New Tour is available on our Website!",
-                    "Check the details no Our Website!\nThe number of available tours is: " + tourRepository.count());
+                    "Check the details on our Website!\nThe number of available tours is: " + tourRepository.count());
         }
-
     }
 
     @Override

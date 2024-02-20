@@ -26,22 +26,33 @@ public class CustomerController {
     }
 
     @GetMapping(value = "{customerId}")
-    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable Long customerId) throws CustomerNotFoundException {
+    public ResponseEntity<CustomerDto> getCustomerById(@PathVariable Long customerId)
+            throws CustomerNotFoundException {
 
         return ResponseEntity.ok(customerFacade.getCustomerById(customerId));
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Void> createCustomer(@RequestBody CustomerDto customerDto) throws CustomerAlreadyExistsException {
+    public ResponseEntity<Void> createCustomer(@RequestBody CustomerDto customerDto)
+            throws CustomerAlreadyExistsException {
 
         customerFacade.createCustomer(customerDto);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping
-    public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDto customerDto) throws CustomerNotFoundException {
+    public ResponseEntity<Void> updateCustomer(@RequestBody CustomerDto customerDto)
+            throws CustomerNotFoundException {
 
         customerFacade.updateCustomer(customerDto);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping(value = "/deactivate")
+    public ResponseEntity<Void> updateCustomerDeactivate(@RequestBody CustomerDto customerDto)
+            throws CustomerNotFoundException {
+
+        customerFacade.updateCustomerDeactivate(customerDto);
         return ResponseEntity.ok().build();
     }
 

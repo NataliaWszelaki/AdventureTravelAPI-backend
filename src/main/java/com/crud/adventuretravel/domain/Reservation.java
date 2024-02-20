@@ -33,7 +33,14 @@ public class Reservation {
     @JoinColumn(name = "CUSTOMER_ID")
     private Customer customer;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY,
+            cascade =
+            {
+                    CascadeType.DETACH,
+                    CascadeType.MERGE,
+                    CascadeType.REFRESH,
+                    CascadeType.PERSIST
+            })
     @JoinTable(
             name = "JOIN_RESERVATION_ATTRACTION",
             joinColumns = @JoinColumn(name = "RESERVATION_ID"),
@@ -53,4 +60,18 @@ public class Reservation {
     @NotNull
     @Column(name = "RESERVATION_STATUS")
     private ReservationStatus reservationStatus;
+
+    @Column(name = "ACTIVE")
+    private boolean isActive;
+
+    public Reservation(long id, Tour tour, Customer customer, Set<Attraction> attractionList, LocalDate reservationDate,
+                       PaymentStatus paymentStatus, ReservationStatus reservationStatus) {
+        this.id = id;
+        this.tour = tour;
+        this.customer = customer;
+        this.attractionList = attractionList;
+        this.reservationDate = reservationDate;
+        this.paymentStatus = paymentStatus;
+        this.reservationStatus = reservationStatus;
+    }
 }

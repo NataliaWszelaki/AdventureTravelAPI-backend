@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -22,7 +23,9 @@ public class TourFacade {
 
     public List<TourDto> getTours() {
 
-        List<Tour> tourList = tourDBService.getAllTours();
+        List<Tour> tourList = tourDBService.getAllTours().stream()
+                .filter(t -> t.isActive())
+                .collect(Collectors.toList());
         return tourMapper.mapToTourDtoList(tourList);
     }
 
@@ -43,6 +46,11 @@ public class TourFacade {
 
         Tour tour = tourMapper.mapToTour(tourDto);
         tourDBService.updateTour(tour);
+    }
+
+    public void updateTourDeactivate(TourDto tourDto) throws TourNotFoundException {
+
+        tourDBService.updateTourDeactivate(tourDto);
     }
 
     public void deleteTour(long tourId) {

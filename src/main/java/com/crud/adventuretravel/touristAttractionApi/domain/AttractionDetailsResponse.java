@@ -4,18 +4,22 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class AttractionDetailsResponse {
 
     @JsonProperty("status")
-    public Integer status;
+    private Integer status;
+
     @JsonProperty("msg")
-    public Object msg;
+    private Object msg;
+
     @JsonProperty("results")
-    public AttractionDetailsResults attractionDetailsResults;
+    private AttractionDetailsResults attractionDetailsResults;
 
     public AttractionDetailsResponse(AttractionDetailsResults attractionDetailsResults) {
         this.attractionDetailsResults = attractionDetailsResults;

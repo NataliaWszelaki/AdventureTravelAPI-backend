@@ -16,6 +16,7 @@ public class CurrencyapiStatusResponse {
 
     @JsonProperty("account_id")
     private long accountId;
+
     @JsonProperty("quotas")
     private Quotas quotas;
 }

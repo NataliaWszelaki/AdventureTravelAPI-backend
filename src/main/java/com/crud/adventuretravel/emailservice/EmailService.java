@@ -16,6 +16,7 @@ public class EmailService {
    private final JavaMailSender javaMailSender;
 
    public void send(final Mail mail) {
+
       log.info("Starting email preparation...");
       try {
          SimpleMailMessage mailMessage = createMailMessage(mail);
@@ -28,6 +29,7 @@ public class EmailService {
    }
 
    private SimpleMailMessage createMailMessage(final Mail mail) {
+
       SimpleMailMessage mailMessage = new SimpleMailMessage();
       mailMessage.setTo(mail.getMailTo());
       mailMessage.setCc(mail.getToCcList().toArray(new String[0]));

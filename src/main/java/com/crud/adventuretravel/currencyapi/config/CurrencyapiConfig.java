@@ -10,6 +10,7 @@ public class CurrencyapiConfig {
 
     @Value("${currencyapi.api.endpoint.prod}")
     private String currencyapiAPIEndpoint;
+
     @Value("${currencyapi.app.key}")
     private String currencyapiAppKey;
 }

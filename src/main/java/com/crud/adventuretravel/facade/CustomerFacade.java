@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -24,7 +25,9 @@ public class CustomerFacade {
 
     public List<CustomerDto> getCustomers() {
 
-        List<Customer> customerList = customerDBService.getAllCustomers();
+        List<Customer> customerList = customerDBService.getAllCustomers().stream()
+                .filter(c -> c.isActive())
+                .collect(Collectors.toList());
         return customerMapper.mapToCustomerDtoList(customerList);
     }
 
@@ -48,6 +51,11 @@ public class CustomerFacade {
         newTourNotifier.checkSubscriptionUpdatedCustomer(customer);
         newAttractionNotifier.checkSubscriptionUpdatedCustomer(customer);
         customerDBService.updateCustomer(customer);
+    }
+
+    public void updateCustomerDeactivate(CustomerDto customerDto) throws CustomerNotFoundException {
+
+        customerDBService.updateCustomerDeactivate(customerDto);
     }
     
     public void deleteCustomer(long customerId) {

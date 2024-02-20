@@ -18,7 +18,6 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -49,13 +48,13 @@ class ReservationStatusNotifierTest {
     @Test
     void shouldFetchReservationAndAddSubscriberToObserverMap() {
 
-        // Given
+        //Given
         reservation.setReservationStatus(ReservationStatus.NEW);
 
-        // When
+        //When
         reservationStatusNotifier.fetchReservation(reservation);
 
-        // Then
+        //Then
         assertTrue(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(1, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
@@ -64,14 +63,14 @@ class ReservationStatusNotifierTest {
     @Test
     void shouldFetchReservationAndRemoveSubscriberFromObserverMapStatusCanceled() {
 
-        // Given
+        //Given
         reservation.setReservationStatus(ReservationStatus.CANCELED);
         subscriberObserverMap.put(reservation.getId(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
 
-        // When
+        //When
         reservationStatusNotifier.fetchReservation(reservation);
 
-        // Then
+        //Then
         assertFalse(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(0, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
@@ -80,14 +79,14 @@ class ReservationStatusNotifierTest {
     @Test
     void shouldFetchReservationAndRemoveSubscriberFromObserverMapStatusClosed() {
 
-        // Given
+        //Given
         reservation.setReservationStatus(ReservationStatus.CLOSED);
         subscriberObserverMap.put(reservation.getId(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
 
-        // When
+        //When
         reservationStatusNotifier.fetchReservation(reservation);
 
-        // Then
+        //Then
         assertFalse(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(0, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());
@@ -96,15 +95,15 @@ class ReservationStatusNotifierTest {
     @Test
     void shouldFetchReservationAndNotifySubscriberObserverStatusPending() {
 
-        // Given
+        //Given
         reservation.setReservationStatus(ReservationStatus.PENDING);
         subscriberObserverMap.put(reservation.getId(), new Subscriber(customer.getFirstName(), customer.getEmail(), emailService));
         subscriberObserverMap.put(22L, new Subscriber("Eliza", "test@test.pl", emailService));
 
-        // When
+        //When
         reservationStatusNotifier.fetchReservation(reservation);
 
-        // Then
+        //Then
         assertTrue(subscriberObserverMap.containsKey(reservation.getId()));
         assertEquals(2, subscriberObserverMap.size());
         verify(emailService, times(1)).send(any());

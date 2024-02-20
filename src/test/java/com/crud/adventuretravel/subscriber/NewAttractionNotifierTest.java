@@ -16,7 +16,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringBootTest
@@ -66,7 +65,7 @@ class NewAttractionNotifierTest {
     @Test
     void shouldRemoveSubscriberFromListCheckSubscriptionUpdatedCustomer() {
 
-        // Given
+        //Given
         Subscriber subscriber = new Subscriber(customer.getFirstName(), customer.getEmail(), emailService);
         newAttractionNotifier.registerObserver(subscriber);
 

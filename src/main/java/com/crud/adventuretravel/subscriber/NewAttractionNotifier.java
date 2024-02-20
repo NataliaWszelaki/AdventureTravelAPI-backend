@@ -54,9 +54,8 @@ public class NewAttractionNotifier implements NotifierObservable {
         }
         for (SubscriberObserver subscriberObserver : subscriberObserverList) {
             subscriberObserver.update("Exciting News: New Attraction is available on our Website!",
-                    "Check the details no Our Website!\nThe number of available attractions is: " + attractionRepository.count());
+                    "Check the details on our Website!\nThe number of available attractions is: " + attractionRepository.count());
         }
-
     }
 
     @Override
