@@ -11,9 +11,10 @@ To run the app follow this guide:
 1. Create an account on Mailtrap https://mailtrap.io/ and set the following environment variables:
    - MAIL_USERNAME
    - MAIL_PASSWORD
-2. Download the repository for Backend: https://github.com/NataliaWszelaki/AdventureTravelAPI-backend.git
-3. Download the repository for Frontend: https://github.com/NataliaWszelaki/AdventureTravelAPI-frontend.git
-4. Create a MySql database in your IDE and connect to it.
+2. Subscribe for basic plan for Tourit Attraction Api on Rapid API https://rapidapi.com/ptwebsolution/api/tourist-attraction/pricing and set touristAttractionApi.app.key in application.properties
+3. Download the repository for Backend: https://github.com/NataliaWszelaki/AdventureTravelAPI-backend.git
+4. Download the repository for Frontend: https://github.com/NataliaWszelaki/AdventureTravelAPI-frontend.git
+5. Create a MySql database in your IDE and connect to it.
 
 ### Running the app
 1. Run the AdventureTravelApiBackendApplication.java - backend
